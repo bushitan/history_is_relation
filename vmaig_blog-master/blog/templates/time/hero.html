@@ -1,0 +1,128 @@
+{% extends "./blog/base.html" %}
+
+{%block main%}
+
+
+    <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
+<div class="container">
+        <style>
+			ul.timeline {
+				list-style-type: none;
+				background: url("http://fineui.com/res/img/version_line.png") repeat-y scroll 120px 0 transparent;
+				margin: 50px 0;
+				padding: 0;
+			}
+
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 150px;
+				text-align: left;
+				left: 0;
+				top: 10px;
+				color: #999;
+			}
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 30px;
+				font-size: 20px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("http://fineui.com/res/img/version_dot_alt.png");
+			}
+
+			ul.timeline li .content {
+				margin-left: 180px;
+
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 20px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
+
+			ul.timeline li.alt-y .content pre {
+				background-color: #FF9900;
+			}
+
+			a.number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+		</style>
+
+        <h2 style="text-align: center;color:#999 ">文臣：于谦</h2>
+
+		<ul class="timeline">
+				<li><div class="time"></div><div class="version"></div><div class="number">简介</div><div class="content"><pre>于谦（1398年5月13日－1457年2月16日），字廷益，号节庵，汉族，明朝名臣、民族英雄，祖籍考城（今河南省商丘市民权县），浙江杭州府钱塘县（今浙江省杭州市上城区）人。
+                百度百科：<a href="http://baike.baidu.com/subview/22602/4997349.htm#viewPageContent ">http://baike.baidu.com/subview/22602/4997349.htm#viewPageContent </a><br>Wiki百科:
+                </pre></div></li>
+			<li class="alt"><div class="time">正统十四年</div><div class="version">京都保卫战</div><div class="number">保</div><div class="content">
+                <pre>正统十四年（1449年）七月，也先大举进犯，王振挟持明英宗亲征。于谦和兵部尚书邝埜极力劝谏，但明英宗不听。邝埜跟随明英宗管理军队，留于谦主持兵部的工作。待到英宗在土木堡被俘，京师大为震惊，大家都不知道该怎么办。郕王监国，命令群臣讨论作战和防守的方略。
+侍讲徐珵（即徐有贞）说星象有变化，应当迁都南京。于谦厉声说：“提议南迁的人应当斩首！京师是天下根本，只要一动便大事去矣。难道不见宋朝南渡的故事吗？”于谦力主抗战，得到吏部尚书王直、内阁学士陈循等爱国官员的支持。郕王肯定了他的说法，防守的决策就这样定下来了......</pre>
+            </div></li>
+			<li class="alt-y"><div class="time"></div><div class="version"></div><div class="number">鉴</div><div class="content"><pre>与于谦的京都保卫战相反，国民党军队坚守南京却被小日本攻陷了
+而朱元璋当初坚守南京，创立了明朝</pre></div></li>
+				<li><div class="time">景泰八年正月壬午</div><div class="version">夺门之变</div><div class="number">夺</div><div class="content"><pre>景泰八年（1457年）正月壬午，石亨和曹吉祥、徐有贞迎接上皇恢复了帝位，宣谕朝臣以后，立即把于谦和大学士王文逮捕入狱。诬陷于谦等和黄囗制造不轨言论，又和太监王诚、舒良、张永、王勤等策划迎接册立襄王。石亨等拿定这个说法，唆使科道官上奏。都御史萧维祯审判定罪，坐以谋反，判处死刑。王文忍受不了这种诬陷，急于争辩，于谦笑着说：“这是石亨他们的意思罢了，分辩有什么用处？”奏疏上呈后，英宗还有些犹豫，说：“于谦是有功劳的（谦实有功）。”徐有贞进言说：“不杀于谦，复辟这件事就成了出师无名。”明英宗的主意便拿定了。正月二十三日，于谦被押往崇文门外，就在这座他曾拼死保卫的城池前，得到了他最后的结局——斩决。史载：天下冤之！......</pre></div></li>
+			<li class="alt-y"><div class="time"></div><div class="version"></div><div class="number">鉴</div><div class="content"><pre>与于谦的京都保卫战相反，国民党军队坚守南京却被小日本攻陷了
+而朱元璋当初坚守南京，创立了明朝</pre></div></li>
+			<li class="alt"><div class="time">明孝宗弘治二年</div><div class="version">沉冤得雪</div><div class="number">冤</div><div class="content"><pre>于谦已死，由石亨的党羽陈汝言任兵部尚书。不到一年，所干的坏事败露，贪赃累计巨万。明英宗召大臣进去看，铁青着脸说：“于谦在景泰朝受重用，死时没有多余的钱财，陈汝言为什么会有这样多？”石亨低着头不能回答。不久边境有警，明英宗满面愁容。恭顺侯吴瑾在旁边侍候，进谏说：“如果于谦在，一定不会让敌人这样。”明英宗无言以对。这一年，徐有贞被石亨中伤，充军到金齿口。又过了几年，石亨亦被捕入狱，死于狱中；曹吉祥谋反，被灭族，于谦事情得以真相大白。[23]
+明宪宗成化初年，将于冕赦免回来，他上疏申诉冤枉，得以恢复于谦的官职，赐祭，诰文里说：“当国家多难的时候，保卫社稷使其没有危险，独自坚持公道，被权臣奸臣共同嫉妒。先帝在时已经知道他的冤，而朕实在怜惜他的忠诚。”这诰文在全国各地传颂。
+明孝宗弘治二年（1489年），采纳了给事中孙需的意见，赠给于谦特进光禄大夫、柱国、太傅，谥号肃愍，赐在墓建祠堂，题为“旌功”，由地方有关部门年节拜祭。万历中，改谥为忠肃。杭州、河南、山西都是历代奉拜祭祀不止。[24]
+万历十八年（1590年），改谥为“忠肃”。
+乾隆十六年（1751年），乾隆帝南巡，题写匾额“丹心抗节”。</pre></div></li>
+			<li class="alt-y"><div class="time"></div><div class="version"></div><div class="number">鉴</div><div class="content"><pre>秦桧的“莫须有”，徐有贞的“意欲”...历史何其相似</pre></div></li>
+			<li class="alt"><div class="time"></div><div class="version"></div><div class="number">游</div><div class="content"><pre>游戏的超链接</pre></div></li>
+			<li><div class="time"></div><div class="version"></div><div class="number">评</div><div class="content"><pre>网友的亲身经历，评价，对相同经历的分享</pre></div></li>
+
+			<!--<li class="alt-y"><div class="time"></div><div class="version"></div><div class="number">鉴</div><div class="content"><pre>网友的亲身经历，评价，对相同经历的分享</pre></div></li>-->
+			<!--<li><div class="time">1368年-1644年</div><div class="version"></div><div class="number">明</div><div class="content"><pre>朱元璋 朱允炆 朱棣</pre></div></li>-->
+			<!--<li class="alt"><div class="time">1636年-1911年</div><div class="version"></div><div class="number">清</div><div class="content"><pre>康熙</pre></div></li>-->
+			<!--<li><div class="time">1912年-1949年</div><div class="version"></div><div class="number">民国</div><div class="content"><pre>孙中山</pre></div></li>-->
+			<!--<li class="alt"><div class="time">1949年-至今</div><div class="version"></div><div class="number">中国</div><div class="content"><pre>毛泽东 邓小平 江泽民 胡锦涛 习近平</pre></div></li>-->
+
+		</ul>
+  {% include "./vmaig_comments/vmaig_comments.html"%}
+		<!--<div style="margin-left:180px;">-->
+			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
+		<!--</div>-->
+        <!--<br>-->
+		<!--<br>-->
+    </div>
+
+
+{% endblock %}

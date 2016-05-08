@@ -1,0 +1,113 @@
+{% extends "./blog/base.html" %}
+
+{%block main%}
+
+
+    <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
+<div class="container">
+        <style>
+			ul.timeline {
+				list-style-type: none;
+				background: url("http://fineui.com/res/img/version_line.png") repeat-y scroll 120px 0 transparent;
+				margin: 50px 0;
+				padding: 0;
+			}
+
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 150px;
+				text-align: left;
+				left: 0;
+				top: 10px;
+				color: #999;
+			}
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 30px;
+				font-size: 40px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("http://fineui.com/res/img/version_dot_alt.png");
+			}
+
+			ul.timeline li .content {
+				margin-left: 180px;
+
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 20px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
+
+
+			a.number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+		</style>
+
+
+		<a href="/story/2">于谦</a>
+		<a href="/add/story"><button >增加故事</button></a>
+		<ul class="timeline">
+				<li><div class="time">907年-923年</div><div class="version"></div><div class="number">后梁</div><div class="content"><pre>梁太祖朱温</pre></div></li>
+			<li class="alt"><div class="time">923年-936年</div><div class="version"></div><div class="number">后唐</div><div class="content"><pre>唐庄宗李存勖
+			唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 唐庄宗李存勖 </pre></div></li>
+				<li><div class="time">936年-947年</div><div class="version"></div><div class="number">后晋</div><div class="content"><pre>晋高祖石敬瑭</pre></div></li>
+			<li class="alt"><div class="time">947年-951年</div><div class="version"></div><div class="number">后汉</div><div class="content"><pre>汉高祖刘知远</pre></div></li>
+				<li><div class="time">951年-960年</div><div class="version"></div><div class="number">后周</div><div class="content"><pre>周太祖郭威</pre></div></li>
+			<li><div class="time">960年-1279年</div><div class="version"></div><div class="number">宋</div><div class="content"><pre>宋太祖</pre></div></li>
+			<li class="alt"><div class="time">1271年-1368年</div><div class="version"></div><div class="number">元</div><div class="content"><pre>元太祖</pre></div></li>
+			<li><div class="time">1368年-1644年</div><div class="version"></div><div class="number">明</div><div class="content"><pre>朱元璋 朱允炆 朱棣
+			</pre></div></li>
+			<li class="alt"><div class="time">1636年-1911年</div><div class="version"></div><div class="number">清</div><div class="content"><pre>康熙</pre></div></li>
+			<li><div class="time">1912年-1949年</div><div class="version"></div><div class="number">民国</div><div class="content"><pre>孙中山</pre></div></li>
+			<li class="alt"><div class="time">1949年-至今</div><div class="version"></div><div class="number">中国</div><div class="content"><pre>毛泽东 邓小平 江泽民 胡锦涛 习近平</pre></div></li>
+
+		</ul>
+
+		<!--<div style="margin-left:180px;">-->
+			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
+		<!--</div>-->
+        <!--<br>-->
+		<!--<br>-->
+    </div>
+
+
+{% endblock %}

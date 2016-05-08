@@ -1,0 +1,136 @@
+{% extends "./blog/base.html" %}
+
+{%block main%}
+
+
+    <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
+<div class="container">
+        <style>
+			ul.timeline {
+				list-style-type: none;
+				background: url("http://fineui.com/res/img/version_line.png") repeat-y scroll 120px 0 transparent;
+				margin: 50px 0;
+				padding: 0;
+			}
+
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 150px;
+				text-align: left;
+				left: 0;
+				top: 10px;
+				color: #999;
+			}
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 30px;
+				font-size: 20px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("http://fineui.com/res/img/version_dot_alt.png");
+			}
+
+			ul.timeline li .content {
+				margin-left: 180px;
+
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 20px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
+
+			ul.timeline li.alt-y .content pre {
+				background-color: #FF9900;
+			}
+
+			a.number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+		</style>
+
+ 		<h2 style="text-align: center;color:#999 ">
+			{% if story %}
+				{{story.title}}
+			{% endif %}
+		</h2>
+
+		<ul class="timeline">
+			{% if note_list %}
+				{% for note in note_list %}
+					{% if note.style == 1 %}
+						<li  class= "alt-y">
+					{%else%}
+						<li>
+					{% endif %}
+						<div class="time">{{note.occur_date}}</div>
+						<div class="version">{{note.mark}}</div>
+						<div class="number">{{note.mark |slice:"1" }}</div>
+						<div class="content">
+							 {% autoescape off%}
+							{{note.description}}
+							{% endautoescape %}
+							<!--<pre>{{note.description}}-->
+							<!--</pre>-->
+						</div>
+					</li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+
+
+		<div>
+			<ul>
+				<li><span>名称：</span><span><input type="text" /></span></li>
+				<li><span>发生时间：</span><span><input type="text" /></span></li>
+				<li><span>结束时间：</span><span><input type="text" /></span></li>
+				<li><span>鉴：</span><span><textarea ></textarea></span></li>
+			</ul>
+		</div>
+
+		<button>创建故事</button>
+		<!--<div style="margin-left:180px;">-->
+			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
+		<!--</div>-->
+        <!--<br>-->
+		<!--<br>-->
+    </div>
+
+
+{% endblock %}

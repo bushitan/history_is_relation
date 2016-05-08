@@ -1,0 +1,113 @@
+
+    <!--<script type="text/javascript" src="/static/tinymce/tinymce.min.js"></script>-->
+    <!--<script type="text/javascript">-->
+    <!--tinymce.init({-->
+    <!--selector: "textarea",-->
+    <!--theme: "modern",-->
+    <!--plugins: [-->
+        <!--"advlist autolink lists link image charmap print preview hr anchor pagebreak",-->
+        <!--"searchreplace wordcount visualblocks visualchars code fullscreen",-->
+        <!--"insertdatetime media nonbreaking save table contextmenu directionality",-->
+        <!--"emoticons template paste textcolor colorpicker textpattern",-->
+        <!--"sh4tinymce"-->
+    <!--],-->
+    <!--toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",-->
+    <!--toolbar2: "print preview media | forecolor backcolor emoticons | sh4tinymce",-->
+    <!--image_advtab: true,-->
+    <!--templates: [-->
+        <!--{title: 'Test template 1', content: 'Test 1'},-->
+        <!--{title: 'Test template 2', content: 'Test 2'}-->
+    <!--],-->
+    <!--height:"300px",-->
+<!--});-->
+
+<!--</script>-->
+
+<div class="well">
+    <div class="vmaig-comment">
+        <div class="vmaig-comment-tx">
+            {% if user.img%}
+            <img src="{{user.img}}" width="40"></img>
+            {%else%}
+            <img src="http://vmaig.qiniudn.com/image/tx/tx-default.jpg" width="40"></img>
+            {%endif%}
+        </div>
+        <div class="vmaig-comment-edit clearfix">
+            <form id="vmaig-comment-form" method="post" role="form">
+                {% csrf_token %}
+                <textarea id="comment" name="comment" class="form-control" rows="4" placeholder="请输入评论 限200字!"></textarea>
+                <button type="submit" class="btn btn-vmaig-comments pull-right">提交</button>
+            </form>
+        </div>
+        <div id="test_content"></div>
+        <ul>
+            {% for comment in comment_list%}
+            <li>
+            <div class="vmaig-comment-tx">
+                {% if comment.user.img %}
+                <img src={{comment.user.img}} width="40"></img>
+                {%else%}
+                <img src="http://vmaig.qiniudn.com/image/tx/tx-default.jpg" width="40"></img>
+                {%endif%}
+            </div>
+            <div class="vmaig-comment-content">
+                <a><h1>{{comment.user.username}}</h1></a>
+                <p>
+                    评论：
+                    {% autoescape on%}
+                    {{comment.comment}}
+                    {% endautoescape %}
+                </p>
+                <p>{{comment.create_time|date:"Y-m-d H:i:s" }}</p>
+            </div>
+            </li>
+            {% endfor%}
+        </ul>
+
+    </div>
+      <fieldset class="module aligned ">
+    <h2>摘要</h2>
+
+    </fieldset>
+</div>
+
+<script language="javascript" type="text/javascript">
+    $('#vmaig-comment-form').submit(function(){
+        $.ajax({
+            type:"POST",
+            url:"/comment/{{article.en_title}}",
+            data:{"comment":$("#comment").val()},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
+            },
+            success:function(data,textStatus){
+                $("#comment").val("");
+                $(".vmaig-comment ul").prepend(data);
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+
+            }
+
+        });
+        return false;
+    });
+
+      function doy(){
+         var tmp= tinymce.get('comment').getContent();      //此函数可获得编辑框内容
+//         var tmp2=tinymce.get('elm2').getContent();
+//         $('textarea').hide()
+//         $('.activityshow_box').show();
+//         $('.activityshow_box').append(tmp);
+//         tinymce.activeEditor.setContent("<p style='color:red;'>这只是个测试</p>");     //设置编辑框内容   Jquery.text('内容')方法也可以达到设置编辑框内容目的
+         alert(tmp);
+//         alert(tmp2);
+     }
+    function add_test_content()
+    {
+        var tmp= tinymce.get('comment').getContent();
+         $("#test_content").empty();
+        $("#test_content").append(tmp)
+    }
+//    doy()
+</script>
