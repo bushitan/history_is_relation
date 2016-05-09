@@ -96,46 +96,6 @@ class StoryView(BaseMixin, ListView):
     template_name = 'time/story.html'
     context_object_name = 'story'
 
-    def post(self, request, *args, **kwargs):
-        _story_id = self.request.POST.get("story_id", "")
-        _occur_date = self.request.POST.get("occur_date", "")
-        _mark = self.request.POST.get("mark", "")
-        _description = self.request.POST.get("description", "")
-        _style = 0
-        #创建note（可以重复）
-        _newNote = Note(
-            # occur_date = _occur_date,
-            mark = _mark,
-            description = _description,
-            style = _style
-        )
-        _newNote.save()
-        _note_id = _newNote.id
-
-        #story与note关系保存
-        _story = Story.objects.get(id=_story_id)
-        if RelStoryNote.objects.filter(story = _story, note = _newNote).exists() is False:
-            _rel = RelStoryNote(
-                story = _story,
-                note = _newNote
-            )
-            _rel.save()
-
-        #把获取的数据又传到前台
-        mydict = {"url": '/story/'+ _story_id }
-        print _story_id ,2
-        # mydict = {
-        #     "occur_date": _occur_date,
-        #     "mark": _mark,
-        #     "description": _description,
-        #     "style": _style
-        # }
-        return HttpResponse(
-            json.dumps(mydict),
-            content_type="application/json"
-        )
-
-
     def get_context_data(self, **kwargs):
 
         _id = self.kwargs.get('id', '')
@@ -197,7 +157,53 @@ class AddStoryView(BaseMixin, ListView):
 
 class AddNoteView(BaseMixin, ListView):
     template_name = 'time/add_note.html'
+    context_object_name = 'note'
+
+    def post(self, request, *args, **kwargs):
+        print "OK"
+        _story_id  = self.kwargs.get('story_id', '')
+        # _story_id = self.request.POST.get("story_id", "")
+        _occur_date = self.request.POST.get("occur_date", "")
+        _mark = self.request.POST.get("mark", "")
+        _description = self.request.POST.get("description", "")
+        _style = 0
+        print "style" , _style
+        #创建note（可以重复）
+        _newNote = Note(
+            # occur_date = _occur_date,
+            mark = _mark,
+            description = _description,
+            style = _style
+        )
+        _newNote.save()
+        _note_id = _newNote.id
+
+        print "style1" , _style
+        #story与note关系保存
+        _story = Story.objects.get(id=_story_id)
+        if RelStoryNote.objects.filter(story = _story, note = _newNote).exists() is False:
+            _rel = RelStoryNote(
+                story = _story,
+                note = _newNote
+            )
+            _rel.save()
+
+        #把获取的数据又传到前台
+        mydict = {"url": '/story/'+ _story_id }
+        print _story_id ,2
+        # mydict = {
+        #     "occur_date": _occur_date,
+        #     "mark": _mark,
+        #     "description": _description,
+        #     "style": _style
+        # }
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
+
     def get_context_data(self, **kwargs):
+        kwargs['story_id']  = self.kwargs.get('story_id', '')
         return super(AddNoteView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass

@@ -2,7 +2,6 @@
 
 {%block main%}
 
-
     <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
@@ -85,22 +84,28 @@
 			}
 		</style>
 
+
+
  		<h2 style="text-align: center;color:#999 ">
 			{% if story %}
 				{{story.title}}
 			{% endif %}
 		</h2>
-		<div>
-			<form id="note-create-form" method="post" role="form">
-				<ul>
-					<li><span>发生时间：</span><span><input id="occur_date" type="text" /></span></li>
-					<li><span>标志：</span><span><input id='mark' type="text" /></span></li>
-					<li><span>描述：</span><span><input id="description" type="text"  /></span></li>
-					<!--<li><span>类别：</span><span><textarea id="style" ></textarea></span></li>-->
-				</ul>
-				<button type="submit">创建便签</button>
-			  </form>
-		</div>
+		<!--<div>-->
+			<!--<form id="note-create-form" method="post" role="form">-->
+				<!--<ul>-->
+					<!--<li><span>发生时间：</span><span><input id="occur_date" type="text" /></span></li>-->
+					<!--<li><span>标志：</span><span><input id='mark' type="text" /></span></li>-->
+					<!--<li><span>描述：</span><span><input id="description" type="text"  /></span></li>-->
+					<!--&lt;!&ndash;<li><span>类别：</span><span><textarea id="style" ></textarea></span></li>&ndash;&gt;-->
+				<!--</ul>-->
+				<!--<button type="submit">创建便签</button>-->
+			  <!--</form>-->
+		<!--</div>-->
+
+		<a href="/add/note/{{story_id}}">创建标签</a>
+
+
 		<ul class="timeline">
 			{% if note_list %}
 				{% for note in note_list %}
@@ -123,8 +128,6 @@
 			{% endif %}
 		</ul>
 
-  <!--{% include "./vmaig_comments/vmaig_comments.html"%}-->
-
 		<!--<div style="margin-left:180px;">-->
 			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
 		<!--</div>-->
@@ -133,38 +136,6 @@
     </div>
 
 <script language="javascript" type="text/javascript">
-    $('#note-create-form').submit(function(){
-        $.ajax({
-            type:"POST",
-            url:"/story/{{story_id}}",
-            data:{
-				"story_id":'{{story_id}}',
-				"occur_date":$("#occur_date").val(),
-				"mark":$("#mark").val(),
-				"description":$("#description").val()
-			},
-            beforeSend:function(xhr){
-                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
-            },
-            success:function(data,textStatus){
-				console.log(data.url +data.isend + " ,"+textStatus );
-				window.location.href = data.url;
-//				var s = '<li>' +
-//						'<div class="time">'+data.occur_date+'</div>' +
-//						'<div class="version">'+data.mark+'</div>' +
-//						'<div class="number">'+data.mark+'</div>' +
-//						'<div class="content">'+data.description+'</div>' +
-//						'</li>'
-
-            },
-            error:function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest.responseText);
-
-            }
-
-        });
-        return false;
-    });
 
 </script>
 

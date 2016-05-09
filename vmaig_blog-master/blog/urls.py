@@ -29,7 +29,7 @@ urlpatterns = [
         url(r'^hero$', HeroView.as_view()),
         url(r'^story/(?P<id>\w+)$', StoryView.as_view()),
         url(r'^add/story$', AddStoryView.as_view()),
-        url(r'^add/note$', AddNoteView.as_view()),
+        url(r'^add/note/(?P<story_id>\w+)$', AddNoteView.as_view()),
         url(r'^editor/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', EditorNoteView.as_view()),
 
 

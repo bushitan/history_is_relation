@@ -85,52 +85,56 @@
 			}
 		</style>
 
- 		<h2 style="text-align: center;color:#999 ">
-			{% if story %}
-				{{story.title}}
-			{% endif %}
-		</h2>
-
-		<ul class="timeline">
-			{% if note_list %}
-				{% for note in note_list %}
-					{% if note.style == 1 %}
-						<li  class= "alt-y">
-					{%else%}
-						<li>
-					{% endif %}
-						<div class="time">{{note.occur_date}}</div>
-						<div class="version">{{note.mark}}</div>
-						<div class="number">{{note.mark |slice:"1" }}</div>
-						<div class="content">
-							 {% autoescape off%}
-							{{note.description}}
-							{% endautoescape %}
-							<!--<pre>{{note.description}}-->
-							<!--</pre>-->
-						</div>
-					</li>
-				{% endfor %}
-			{% endif %}
-		</ul>
-
 
 		<div>
-			<ul>
-				<li><span>名称：</span><span><input type="text" /></span></li>
-				<li><span>发生时间：</span><span><input type="text" /></span></li>
-				<li><span>结束时间：</span><span><input type="text" /></span></li>
-				<li><span>鉴：</span><span><textarea ></textarea></span></li>
-			</ul>
+			<form id="note-create-form" method="post" role="form">
+				<ul>
+					<li><span>发生时间：</span><span><input id='occur_date' type="text" ></span></li>
+					<li><span>标志：</span><span><input id="mark" type="text" /></span></li>
+					<li><span>描述：</span><span><textarea id="description" ></textarea></span></li>
+					<li><span>类别：</span><span><input id="tyle" type="text"  /></span></li>
+				</ul>
+				<button type="submit">创建标签</button>
+
+				<button onclick="window.location.href='/story/{{story_id}}'">取消</button>
+			  </form>
 		</div>
 
-		<button>创建故事</button>
+
 		<!--<div style="margin-left:180px;">-->
 			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
 		<!--</div>-->
         <!--<br>-->
 		<!--<br>-->
     </div>
+
+<script language="javascript" type="text/javascript">
+ $('#note-create-form').submit(function(){
+        $.ajax({
+            type:"POST",
+            url:"/add/note/{{story_id}}",
+            data:{
+//				"story_id":'{{story_id}}',
+				"occur_date":$("#occur_date").val(),
+				"mark":$("#mark").val(),
+				"description":$("#description").val()
+			},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+            },
+            success:function(data,textStatus){
+				console.log(data.url +data.isend + " ,"+textStatus );
+				window.location.href = data.url;
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+                alert(XMLHttpRequest.responseText);
+            }
+
+        });
+        return false;
+    });
+
+</script>
 
 
 {% endblock %}
