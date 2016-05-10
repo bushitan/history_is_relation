@@ -166,11 +166,11 @@ class AddNoteView(BaseMixin, ListView):
         _occur_date = self.request.POST.get("occur_date", "")
         _mark = self.request.POST.get("mark", "")
         _description = self.request.POST.get("description", "")
-        _style = 0
-        print "style" , _style
+        _style = int(self.request.POST.get("style", ""))
+        # print "style" , _style
         #创建note（可以重复）
         _newNote = Note(
-            # occur_date = _occur_date,
+            occur_date = _occur_date,
             mark = _mark,
             description = _description,
             style = _style
@@ -178,7 +178,7 @@ class AddNoteView(BaseMixin, ListView):
         _newNote.save()
         _note_id = _newNote.id
 
-        print "style1" , _style
+        # print "style1" , _style
         #story与note关系保存
         _story = Story.objects.get(id=_story_id)
         if RelStoryNote.objects.filter(story = _story, note = _newNote).exists() is False:
@@ -221,15 +221,16 @@ class EditorNoteView(BaseMixin, ListView):
         _occur_date = self.request.POST.get("occur_date", "")
         _mark = self.request.POST.get("mark", "")
         _description = self.request.POST.get("description", "")
-        _style = self.request.POST.get("style", "")
+        _style = int(self.request.POST.get("style", ""))
 
         #修改note
         _updateNote = Note.objects.get(id = _note_id )
-        # _updateNote.occur_date = _occur_date
+        _updateNote.occur_date = _occur_date
         _updateNote.mark = _mark
         _updateNote.description = _description
-        print _mark,_description
-        # _updateNote.style = int(_style)
+        # print _mark,_description
+        print _updateNote.style,_updateNote.description
+        _updateNote.style = _style
         _updateNote.save()
 
         mydict = {"url": '/story/'+ _story_id }
@@ -248,6 +249,28 @@ class EditorNoteView(BaseMixin, ListView):
         return note
     # context_object_name = 'story'
 
+#删除标签
+class DeleteNoteView(BaseMixin, ListView):
+    # template_name = 'time/editor_note.html'
+    # context_object_name = 'note'
+
+    def post(self, request, *args, **kwargs):
+        _note_id = self.kwargs.get('note_id', '')
+        _story_id  = self.kwargs.get('story_id', '')
+
+        print Note.objects.filter(id=_note_id).exists()
+        if  Note.objects.filter(id=_note_id).exists():
+            _note = Note.objects.get(id=_note_id)
+            _story = Story.objects.get(id=_story_id)
+            _rel = RelStoryNote.objects.filter(story = _story, note = _note)
+            _rel.delete()
+            _note.delete()
+
+        mydict = {"url": '/story/'+ _story_id }
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
 
 
 

@@ -161,8 +161,8 @@ class News(models.Model):
 #history
 class Story(models.Model):
     title =  models.CharField(max_length=100, verbose_name=u'名称')
-    occur_date = models.DateTimeField(u'发生时间', null=True)
-    death_date = models.DateTimeField(u'结束时间', null=True)
+    occur_date = models.DateField(u'发生时间', null=True)
+    death_date = models.DateField(u'结束时间', null=True)
     mirror = models.TextField(blank=True, null=True, verbose_name=u'鉴')
     class Meta:
         verbose_name_plural = verbose_name = u'历史故事'
@@ -170,7 +170,8 @@ class Story(models.Model):
     def __unicode__(self):
         return '%s' % (self.title)
 class Note(models.Model):
-    occur_date = models.DateTimeField(u'发生时间', null=True)
+    occur_date = models.DateField(u'发生时间', null=True,)
+
     mark =  models.CharField(max_length=100, verbose_name=u'标识',null=True)
     description = models.TextField(verbose_name=u'描述')
     style = models.IntegerField(default=0, choices=NODE_STYLE.items(),
@@ -187,3 +188,5 @@ class RelStoryNote(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = u'历史故事便签关系'
         app_label = string_with_title('blog', u"以史为鉴")
+
+

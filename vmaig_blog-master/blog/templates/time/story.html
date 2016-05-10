@@ -2,7 +2,7 @@
 
 {%block main%}
 
-    <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!--<link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">-->
 	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
 <div class="container">
@@ -20,18 +20,19 @@
 			}
 			ul.timeline li .time {
 				position: absolute;
-				width: 150px;
-				text-align: left;
-				left: 0;
+				width: 290px;
+				text-align: right;
+				left: -200px;
 				top: 10px;
 				color: #999;
 			}
+
 			ul.timeline li .version {
 				position: absolute;
 				width: 290px;
 				text-align: right;
 				left: -200px;
-				top: 30px;
+				top: 20px;
 				font-size: 20px;
 				line-height: 50px;
 				color: #3594cb;
@@ -114,7 +115,7 @@
 					{%else%}
 						<li>
 					{% endif %}
-						<div class="time">{{note.id}}</div>
+						<div class="time">{{note.occur_date | date:"Y-m-d"}}</div>
 						<div class="version">{{note.mark}}</div>
 						<div class="number">{{note.mark |slice:"1" }}</div>
 						<div class="content">
