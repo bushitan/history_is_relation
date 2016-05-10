@@ -156,7 +156,7 @@ class AddStoryView(BaseMixin, ListView):
 
 
 class AddNoteView(BaseMixin, ListView):
-    template_name = 'time/add_note.html'
+    template_name = 'time/note.html'
     context_object_name = 'note'
 
     def post(self, request, *args, **kwargs):
@@ -211,7 +211,7 @@ class AddNoteView(BaseMixin, ListView):
 
 #修改note
 class EditorNoteView(BaseMixin, ListView):
-    template_name = 'time/editor_note.html'
+    template_name = 'time/note.html'
     context_object_name = 'note'
 
     #修改后的note
