@@ -66,7 +66,7 @@
 
     </div>
       <fieldset class="module aligned ">
-    <h2>摘要</h2>
+    <!--<h2>摘要</h2>-->
 
     </fieldset>
 </div>
@@ -75,14 +75,26 @@
     $('#vmaig-comment-form').submit(function(){
         $.ajax({
             type:"POST",
-            url:"/comment/{{article.en_title}}",
+            url:"/comment/{{note_id}}/{{story_id}}",
             data:{"comment":$("#comment").val()},
             beforeSend:function(xhr){
                 xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));  
             },
             success:function(data,textStatus){
                 $("#comment").val("");
-                $(".vmaig-comment ul").prepend(data);
+                str = "<li>"+
+                     "<div class=\"vmaig-comment-tx\">"+
+                         "<img src="+data.img+" width=\'40\'></img>"+
+                     "</div>"+
+                     "<div class=\"vmaig-comment-content\">"+
+                         "<a><h1>"+data.username+"</h1></a>"+
+                         "<p>评论："+data.comment+"</p>"+
+                         "<p>"+data.time+"/p>"+
+                     "</div>"+
+                 "</li>";
+
+                $(".vmaig-comment ul").prepend(str);
+//                console.log(data)
             },
             error:function(XMLHttpRequest, textStatus, errorThrown){
                 alert(XMLHttpRequest.responseText);

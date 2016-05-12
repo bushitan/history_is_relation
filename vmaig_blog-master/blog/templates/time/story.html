@@ -69,7 +69,9 @@
 			}
 
 			ul.timeline li.alt-y .content pre {
-				background-color: #FF9900;
+				background-color: #ffbd40;
+
+				/*background-color: #FF9900;*/
 			}
 
 			a.number {
@@ -115,16 +117,25 @@
 					{%else%}
 						<li>
 					{% endif %}
-						<div class="time">{{note.occur_date | date:"Y-m-d"}}</div>
-						<div class="version">{{note.mark}}</div>
-						<div class="number">{{note.mark |slice:"1" }}</div>
-						<div class="content">
-							<a href="/editor/note/{{note.id}}/{{story_id}}">编辑</a>
-							<pre>{% autoescape off%}{{note.description}}{% endautoescape %}</pre>
-							<!--<pre>{{note.description}}-->
-							<!--</pre>-->
-						</div>
-					</li>
+							<div class="time">{{note.occur_date | date:"Y-m-d"}}</div>
+							<div class="version">{{note.mark}}</div>
+							<div class="number">{{note.mark |slice:"1" }}</div>
+							<div class="content">
+								<a href="/editor/note/{{note.id}}/{{story_id}}">编辑</a>
+								<a href="/comment/note/{{note.id}}/{{story_id}}">评论</a>
+								<pre>{% autoescape off%}{{note.description}}{% endautoescape %}</pre>
+								<!--<pre>{{note.description}}-->
+								<!--</pre>-->
+							</div>
+						</li>
+
+					{% if note.mirror %}
+						<li  class= "alt-y">
+							<div class="content"><pre>{% autoescape off%}{{note.mirror}}{% endautoescape %}</pre>
+							</div>
+						</li>
+					{% endif %}
+
 				{% endfor %}
 			{% endif %}
 		</ul>

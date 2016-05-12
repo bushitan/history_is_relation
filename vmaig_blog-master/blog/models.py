@@ -171,9 +171,9 @@ class Story(models.Model):
         return '%s' % (self.title)
 class Note(models.Model):
     occur_date = models.DateField(u'发生时间', null=True,)
-
     mark =  models.CharField(max_length=100, verbose_name=u'标识',null=True)
     description = models.TextField(verbose_name=u'描述')
+    mirror = models.TextField(blank=True, null=True, verbose_name=u'鉴')
     style = models.IntegerField(default=0, choices=NODE_STYLE.items(),
                                     verbose_name='类别')
     class Meta:

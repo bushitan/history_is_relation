@@ -50,6 +50,14 @@ class BaseMixin(object):
         return context
 
 
+class CommentTestView(BaseMixin, ListView):
+    template_name = 'time/test1.html'
+
+    def get_context_data(self, **kwargs):
+        return super(CommentTestView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+
 class IndexView(BaseMixin, ListView):
     template_name = 'blog/index.html'
     context_object_name = 'article_list'
@@ -119,7 +127,6 @@ class StoryView(BaseMixin, ListView):
         # return article_list
 
 
-
 class AddStoryView(BaseMixin, ListView):
     template_name = 'time/add_story.html'
     def post(self, request, *args, **kwargs):
@@ -166,6 +173,7 @@ class AddNoteView(BaseMixin, ListView):
         _occur_date = self.request.POST.get("occur_date", "")
         _mark = self.request.POST.get("mark", "")
         _description = self.request.POST.get("description", "")
+        _mirror = self.request.POST.get("mirror", "")
         _style = int(self.request.POST.get("style", ""))
         # print "style" , _style
         #创建note（可以重复）
@@ -173,6 +181,7 @@ class AddNoteView(BaseMixin, ListView):
             occur_date = _occur_date,
             mark = _mark,
             description = _description,
+            mirror = _mirror,
             style = _style
         )
         _newNote.save()
@@ -221,6 +230,7 @@ class EditorNoteView(BaseMixin, ListView):
         _occur_date = self.request.POST.get("occur_date", "")
         _mark = self.request.POST.get("mark", "")
         _description = self.request.POST.get("description", "")
+        _mirror = self.request.POST.get("mirror", "")
         _style = int(self.request.POST.get("style", ""))
 
         #修改note
@@ -228,6 +238,7 @@ class EditorNoteView(BaseMixin, ListView):
         _updateNote.occur_date = _occur_date
         _updateNote.mark = _mark
         _updateNote.description = _description
+        _updateNote.mirror = _mirror
         # print _mark,_description
         print _updateNote.style,_updateNote.description
         _updateNote.style = _style
@@ -271,6 +282,28 @@ class DeleteNoteView(BaseMixin, ListView):
             json.dumps(mydict),
             content_type="application/json"
         )
+
+
+#对每个便签的评论
+class CommentNoteView(BaseMixin, ListView):
+    queryset = Note.objects.all()
+    template_name = 'time/comment_note.html'
+    context_object_name = 'note'
+
+    def get_context_data(self, **kwargs):
+        # 评论
+        _note_id = self.kwargs.get('note_id', '')
+        kwargs['comment_list'] = \
+            self.queryset.get(id=_note_id).comment_set.all()
+
+
+        kwargs['note_id'] = self.kwargs.get('note_id', '')
+        kwargs['story_id'] = self.kwargs.get('story_id', '')
+
+        return super(CommentNoteView, self).get_context_data(**kwargs)
+        # return super(CommentNoteView, self).get_context_data(**kwargs)
+
+    # def get_queryset(self):
 
 
 

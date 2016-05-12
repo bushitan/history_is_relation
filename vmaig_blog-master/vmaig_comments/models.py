@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
-from blog.models import Article
+from blog.models import Note
 
 # Create your models here.
 
@@ -22,11 +22,11 @@ class string_with_title(str):
 
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'用户')
-    article = models.ForeignKey(Article, verbose_name=u'文章')
-    comment = models.TextField(verbose_name=u'评论内容')
+    note =  models.ForeignKey(Note, verbose_name=u'便签')
+    comment = models.TextField(verbose_name=u'评论内容' ,null=True)
     create_time = models.DateTimeField(u'创建时间', auto_now_add=True)
 
     class Meta:
-        verbose_name_plural = verbose_name = u'评论'
+        verbose_name_plural = verbose_name = u'评论_l'
         ordering = ['-create_time']
-        app_label = string_with_title('vmaig_comments', u"评论管理")
+        app_label = string_with_title('vmaig_comments', u"历史_评论")

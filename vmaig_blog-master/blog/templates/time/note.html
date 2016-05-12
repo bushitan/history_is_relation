@@ -8,7 +8,7 @@
 	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
 <style>
 	textarea{
-		height:300px;
+		height:100px;
 		width:600px;
 	}
 </style>
@@ -20,6 +20,7 @@
 					<li><span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span></li>
 					<li><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></li>
 					<li><span>描述：</span><span><textarea id="description" >{{note.description}}</textarea></span></li>
+					<li><span>鉴：</span><span><textarea id="mirror" >{{note.mirror}}</textarea></span></li>
 					<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>
 				</ul>
 				<button type="submit">修改标签</button>
@@ -32,7 +33,8 @@
 				<ul>
 					<li><span>发生时间：</span><span><input id='occur_date' type="text" ></span></li>
 					<li><span>标志：</span><span><input id="mark" type="text" /></span></li>
-					<li><span>描述：</span><span><textarea id="description" ></textarea></span></li>
+					<li><span>描述：</span><span><textarea id="description" contenteditable="true" ></textarea></span></li>
+					<li><span>鉴：</span><span><textarea id="mirror" ></textarea></span></li>
 					<li><span>类别：</span><span><input id="style" type="text" value="0" /></span></li>
 				</ul>
 				<button type="submit">创建标签</button>
@@ -52,6 +54,7 @@
 					"occur_date":$("#occur_date").val(),
 					"mark":$("#mark").val(),
 					"description":$("#description").val(),
+					"mirror":$("#mirror").val(),
 					"style":$("#style").val()
 				},
 				beforeSend:function(xhr){
@@ -77,6 +80,7 @@
 				"occur_date":$("#occur_date").val(),
 				"mark":$("#mark").val(),
 				"description":$("#description").val(),
+				"mirror":$("#mirror").val(),
 				"style":$("#style").val()
 			},
             beforeSend:function(xhr){
@@ -115,5 +119,51 @@
 		});
 </script>
 
+<div id="textBox" contenteditable="true"><p>Lorem ipsum</p></div>
+<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>
+<script type="text/javascript">
+var oDoc, sDefTxt;
+
+function initDoc() {
+  oDoc = document.getElementById("textBox");
+  sDefTxt = oDoc.innerHTML;
+  if (document.compForm.switchMode.checked) { setDocMode(true); }
+}
+
+function formatDoc(sCmd, sValue) {
+  if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
+}
+
+function validateMode() {
+  if (!document.compForm.switchMode.checked) { return true ; }
+  alert("Uncheck \"Show HTML\".");
+  oDoc.focus();
+  return false;
+}
+
+function setDocMode(bToSource) {
+  var oContent;
+  if (bToSource) {
+    oContent = document.createTextNode(oDoc.innerHTML);
+    oDoc.innerHTML = "";
+    var oPre = document.createElement("pre");
+    oDoc.contentEditable = false;
+    oPre.id = "sourceText";
+    oPre.contentEditable = true;
+    oPre.appendChild(oContent);
+    oDoc.appendChild(oPre);
+  } else {
+    if (document.all) {
+      oDoc.innerHTML = oDoc.innerText;
+    } else {
+      oContent = document.createRange();
+      oContent.selectNodeContents(oDoc.firstChild);
+      oDoc.innerHTML = oContent.toString();
+    }
+    oDoc.contentEditable = true;
+  }
+  oDoc.focus();
+}
+</script>
 
 {% endblock %}
