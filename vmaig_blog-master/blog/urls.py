@@ -36,7 +36,7 @@ urlpatterns = [
         url(r'^delete/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', DeleteNoteView.as_view()),
 
 
-        url(r'^comment/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', CommentNoteView.as_view()),
+        url(r'^comment/story/(?P<story_id>\w+)$', CommentNoteView.as_view()),
 
 
 

@@ -17,9 +17,9 @@ class Migration(migrations.Migration):
             name='Comment',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('comment', models.TextField(verbose_name='\u8bc4\u8bba\u5185\u5bb9')),
+                ('comment', models.TextField(null=True, verbose_name='\u8bc4\u8bba\u5185\u5bb9')),
                 ('create_time', models.DateTimeField(auto_now_add=True, verbose_name='\u521b\u5efa\u65f6\u95f4')),
-                ('note', models.ForeignKey(verbose_name='\u4fbf\u7b7e', to='blog.Note')),
+                ('story', models.ForeignKey(verbose_name='\u6545\u4e8b', to='blog.Story')),
                 ('user', models.ForeignKey(verbose_name='\u7528\u6237', to=settings.AUTH_USER_MODEL)),
             ],
             options={

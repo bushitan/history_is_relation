@@ -5,13 +5,13 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.core.exceptions import PermissionDenied
 from vmaig_comments.models import Comment
-from blog.models import Note
+from blog.models import Story
 import json
 
 from qiniu import Auth, put_file, etag, urlsafe_base64_encode
 import qiniu.config
 from django.shortcuts import render,render_to_response
-NoteModel = Note
+StoryModel = Story
 # logger
 logger = logging.getLogger(__name__)
 
@@ -26,10 +26,10 @@ class CommentControl(View):
         user = self.request.user
         # 获取评论
         comment = self.request.POST.get("comment", "")
-
+        print 'OK'
 
         _story_id = self.kwargs.get('story_id', '')
-        _note_id = self.kwargs.get('note_id', '')
+        # _note_id = self.kwargs.get('note_id', '')
 
         # 判断当前用户是否是活动的用户
         if not user.is_authenticated():
@@ -47,18 +47,20 @@ class CommentControl(View):
             )
             return HttpResponse(u"请输入评论内容！", status=403)
 
+        print 'OK1'
         # en_title = self.kwargs.get('slug', '')
         try:
             # 默认使用pk来索引(也可根据需要使用title,en_title在索引
-            _note = NoteModel.objects.get(id=_note_id)
-        except NoteModel.DoesNotExist:
-            logger.error(u'[CommentControl]此便签不存在:[%s]' % _note_id)
+            _story = StoryModel.objects.get(id=_story_id)
+        except StoryModel.DoesNotExist:
+            logger.error(u'[CommentControl]此便签不存在:[%s]' % _story_id)
             raise PermissionDenied
 
+        print 'OK2'
         # 保存评论
         comment = Comment.objects.create(
                 user=user,
-                note=_note,
+                story=_story,
                 comment=comment,
                 )
 

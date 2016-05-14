@@ -4,9 +4,9 @@ from vmaig_comments.models import Comment
 
 
 class CommentAdmin(admin.ModelAdmin):
-    search_fields = ('user__username', 'note__title', 'comment')
+    search_fields = ('user__username', 'story__title', 'comment')
     list_filter = ('create_time',)
-    list_display = ('user', 'note', 'create_time')
-    fields = ('user', 'note', 'comment')
+    list_display = ('user', 'story', 'create_time')
+    fields = ('user', 'story', 'comment')
 
 admin.site.register(Comment, CommentAdmin)

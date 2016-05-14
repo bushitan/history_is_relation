@@ -33,7 +33,18 @@ logger = logging.getLogger(__name__)
 
 
 class BaseMixin(object):
+
+
     def get_context_data(self, *args, **kwargs):
+
+
+        user = self.request.user
+        if not user.is_authenticated():
+           kwargs['user_id'] = "none"
+        else:
+           kwargs['user_id'] = user
+
+
         context = super(BaseMixin, self).get_context_data(**kwargs)
         try:
             # 热门文章
@@ -104,6 +115,12 @@ class StoryView(BaseMixin, ListView):
     template_name = 'time/story.html'
     context_object_name = 'story'
 
+    # def get(self, request, *args, **kwargs):
+        # 获取当前用户
+
+
+
+
     def get_context_data(self, **kwargs):
 
         _id = self.kwargs.get('id', '')
@@ -116,6 +133,9 @@ class StoryView(BaseMixin, ListView):
         kwargs['story_id'] = _id
 
         # print _id
+
+
+
         return super(StoryView, self).get_context_data(**kwargs)
 
     def get_queryset(self):
@@ -177,6 +197,8 @@ class AddNoteView(BaseMixin, ListView):
         _style = int(self.request.POST.get("style", ""))
         # print "style" , _style
         #创建note（可以重复）
+        if _occur_date == '':
+            _occur_date = None
         _newNote = Note(
             occur_date = _occur_date,
             mark = _mark,
@@ -233,9 +255,11 @@ class EditorNoteView(BaseMixin, ListView):
         _mirror = self.request.POST.get("mirror", "")
         _style = int(self.request.POST.get("style", ""))
 
+        print _description
         #修改note
         _updateNote = Note.objects.get(id = _note_id )
-        _updateNote.occur_date = _occur_date
+        if _occur_date == '':
+            _updateNote.occur_date = None
         _updateNote.mark = _mark
         _updateNote.description = _description
         _updateNote.mirror = _mirror
@@ -286,15 +310,15 @@ class DeleteNoteView(BaseMixin, ListView):
 
 #对每个便签的评论
 class CommentNoteView(BaseMixin, ListView):
-    queryset = Note.objects.all()
+    queryset = Story.objects.all()
     template_name = 'time/comment_note.html'
-    context_object_name = 'note'
+    context_object_name = 'story'
 
     def get_context_data(self, **kwargs):
         # 评论
-        _note_id = self.kwargs.get('note_id', '')
+        _story_id = self.kwargs.get('story_id', '')
         kwargs['comment_list'] = \
-            self.queryset.get(id=_note_id).comment_set.all()
+            self.queryset.get(id=_story_id).comment_set.all()
 
 
         kwargs['note_id'] = self.kwargs.get('note_id', '')

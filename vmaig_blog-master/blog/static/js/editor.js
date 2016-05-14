@@ -3,10 +3,10 @@
  */
 
 var oDoc, sDefTxt;
-
+initDoc();
 function initDoc() {
-  oDoc = document.getElementById("textBox");
-  sDefTxt = oDoc.innerHTML;
+  oDoc = document.getElementById("description");
+  //sDefTxt = oDoc.innerHTML;
   if (document.compForm.switchMode.checked) { setDocMode(true); }
 }
 
@@ -45,10 +45,10 @@ function setDocMode(bToSource) {
   oDoc.focus();
 }
 
-function printDoc() {
-  if (!validateMode()) { return; }
-  var oPrntWin = window.open("","_blank","width=450,height=470,left=400,top=100,menubar=yes,toolbar=no,location=no,scrollbars=yes");
-  oPrntWin.document.open();
-  oPrntWin.document.write("<!doctype html><html><head><title>Print<\/title><\/head><body onload=\"print();\">" + oDoc.innerHTML + "<\/body><\/html>");
-  oPrntWin.document.close();
-}
+//function printDoc() {
+//  if (!validateMode()) { return; }
+//  var oPrntWin = window.open("","_blank","width=450,height=470,left=400,top=100,menubar=yes,toolbar=no,location=no,scrollbars=yes");
+//  oPrntWin.document.open();
+//  oPrntWin.document.write("<!doctype html><html><head><title>Print<\/title><\/head><body onload=\"print();\">" + oDoc.innerHTML + "<\/body><\/html>");
+//  oPrntWin.document.close();
+//}
