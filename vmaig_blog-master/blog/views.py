@@ -147,6 +147,30 @@ class StoryView(BaseMixin, ListView):
         # return article_list
 
 
+class QueryStoryView(BaseMixin, ListView):
+    template_name = 'time/add_story.html'
+    def post(self, request, *args, **kwargs):
+
+        _title = self.request.POST.get("title", "")
+        _storys =  Story.objects.filter(title__contains=_title)
+        print
+        _list = []
+        for _story in _storys :
+            _list.append({
+                'id':_story.id,
+                'title':_story.title,
+                'author':_story.author.username
+            })
+        mydict = {'story_info':_list}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
+
+    def get_context_data(self, **kwargs):
+        return super(QueryStoryView, self).get_context_data(**kwargs)
+
+
 class AddStoryView(BaseMixin, ListView):
     template_name = 'time/add_story.html'
     def post(self, request, *args, **kwargs):

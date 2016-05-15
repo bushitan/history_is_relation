@@ -36,11 +36,19 @@ img.intLink { border: 0; }
 </style>
 <div class="container">
       	<div>
+			<p>
+				<form id="note-editor-form" method="post" role="form">
+					<button type="submit">修改标签</button>
+					<button type="button"  onclick="window.location.href='/story/{{story_id}}'">取消</button>
+					<button type="button" id="note-delete" >删除标签</button>
+				</form>
+			</p>
 			{% if note %}
 
 				<ul>
 					<li><span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span></li>
 					<li><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></li>
+					<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>
 					<li><span>描述：</span><span>
 						<!--<textarea id="description" >{{note.description}}</textarea>-->
 						<form name="compForm">
@@ -48,25 +56,28 @@ img.intLink { border: 0; }
 							<div id="toolBar2">
 								<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
 							</div>
-							<div id="description" contenteditable="true"><p></p></div>
-							<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>
+							<div id="description" contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>
+							<!--<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>-->
 						</form>
 					</span></li>
 					<!--<li><span>鉴：</span><span><textarea id="mirror" >{{note.mirror}}</textarea></span></li>-->
-					<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>
+
 				</ul>
-			<form id="note-editor-form" method="post" role="form">
-				<button type="submit">修改标签</button>
-				<button type="button"  onclick="window.location.href='/story/{{story_id}}'">取消</button>
-				<button type="button" id="note-delete" >删除标签</button>
-			</form>
+
 
 
 			{% else %}
-
+				<p>
+					</ul>
+					<form id="note-create-form" method="post" role="form">
+					<button type="submit">创建标签</button>
+					<button type="button" onclick="window.location.href='/story/{{story_id}}'">取消</button>
+			  	</form>
+				</p>
 				<ul>
 					<li><span>发生时间：</span><span><input id='occur_date' type="text" ></span></li>
 					<li><span>标志：</span><span><input id="mark" type="text" /></span></li>
+					<li><span>类别：</span><span><input id="style" type="text" value="0" /></span></li>
 					<li><span>描述：</span><span>
 						<!--<textarea id="description" contenteditable="true" ></textarea>-->
 						<form name="compForm">
@@ -75,19 +86,50 @@ img.intLink { border: 0; }
 								<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
 							</div>
 							<div id="description" contenteditable="true"><p></p></div>
-							<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>
+							<!--<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>-->
 						</form>
 					</span></li>
 					<!--<li><span>鉴：</span><span><textarea id="mirror" ></textarea></span></li>-->
-					<li><span>类别：</span><span><input id="style" type="text" value="0" /></span></li>
-				</ul>
-					<form id="note-create-form" method="post" role="form">
-					<button type="submit">创建标签</button>
-					<button type="button" onclick="window.location.href='/story/{{story_id}}'">取消</button>
-			  	</form>
+
+
 			{% endif %}
 		</div>
     </div>
+
+	<!--<a  data-toggle="modal" data-target="#add-hyperlink-modal"  style="padding-right:0px;cursor:pointer;">查询测试</a>-->
+<input type="text" id="query_story">
+					<input type="button" id="note-query-story"  value="查询">
+
+					<div id="story-link"></div>
+					<button id="add-hyperlink-button"  class="btn btn-primary"  style=" float:right;">
+						确认
+					</button>
+
+
+
+	<div class="modal fade" id="add-hyperlink-modal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close"
+						data-dismiss="modal" aria-hidden="true">
+						&times;
+					</button>
+
+				</div>
+				<div class="modal-body clearfix">
+
+
+					<!--<button id=""  class="btn btn-primary" data-dismiss="modal" style=" float:right;">-->
+						<!--取消-->
+					<!--</button>-->
+
+
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal -->
+	</div>
 
 <script language="javascript" type="text/javascript">
 		//创建note
@@ -162,6 +204,61 @@ img.intLink { border: 0; }
 			});
 			return false;
 		});
+
+	//在note查询story，做超链接
+		 $('#note-query-story').click(function(){
+			$.ajax({
+				type:"POST",
+				url:"/query/story",
+				data:{
+					"title":$("#query_story").val()
+				},
+				beforeSend:function(xhr){
+					xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+				},
+				success:function(data,textStatus){
+					console.log(data.story_info);
+					_story_info = data.story_info;
+					for( i in _story_info)
+					{
+						$("#story-link").append(
+								"<p>"+
+								"<input type='radio' id = 'add-hyperlink1' name = 'add-hyperlink' value='"+i+"' " +
+								"story-id='"+_story_info[i].id+"'  story-title='"+_story_info[i].title+"'  story-author='"+_story_info[i].author+"' />" +
+								"<span>"+_story_info[i].id+"</span>"+
+								"<span>"+_story_info[i].title+"</span>"+
+								"<span>"+_story_info[i].author+"</span>" +
+								"</p>"
+						)
+					}
+
+
+//					console.log(data.url +data.isend + " ,"+textStatus );
+//					window.location.href = data.url;
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert(XMLHttpRequest.responseText);
+				}
+			});
+			return false;
+		});
+
+//	$("#description").append("<a>2361测试用的8</a>")
+//	$("#description").append("{{note.description}}");
+	$('#add-hyperlink-button').click(function()
+	{
+//		oDoc.innerHTML = "{{note.description}}"
+
+//		formatDoc('insertHtml',"{{note.description}}");
+//		oDoc.focus();
+		_story_id = $("input:radio[name='add-hyperlink']:checked").attr("story-id");
+		_story_title = $("input:radio[name='add-hyperlink']:checked").attr("story-title");
+		formatDoc('insertHtml',"<a href='/story/"+_story_id+"' >"+_story_title+"</a>");
+//		console.log($("input:radio[name='add-hyperlink']:checked").val());
+//		console.log($("input:radio[name='add-hyperlink']:checked").attr("story"));
+//		return false;
+	});
+
 </script>
 
 

@@ -7,11 +7,13 @@ initDoc();
 function initDoc() {
   oDoc = document.getElementById("description");
   //sDefTxt = oDoc.innerHTML;
-  if (document.compForm.switchMode.checked) { setDocMode(true); }
+  //if (document.compForm.switchMode.checked) { setDocMode(true); }
 }
 
 function formatDoc(sCmd, sValue) {
-  if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }
+  //oDoc.focus();
+  //if (validateMode()) { document.execCommand(sCmd, false, sValue); oDoc.focus(); }+
+  document.execCommand(sCmd, false, sValue); oDoc.focus();
 }
 
 function validateMode() {

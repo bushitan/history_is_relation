@@ -2,7 +2,7 @@ from django.conf.urls import url
 from blog.views import (IndexView, ArticleView, AllView, SearchView,
                         ColumnView, UserView, NewsView, TagView, CategoryView,
                         TimeLineIndexView,HeroView,StoryView,AddStoryView,AddNoteView,EditorNoteView,DeleteNoteView,CommentNoteView,
-                        CommentTestView)
+                        CommentTestView,QueryStoryView)
 from django.views.generic import TemplateView, DetailView
 from blog.models import News
 
@@ -30,6 +30,7 @@ urlpatterns = [
         url(r'^time$', TimeLineIndexView.as_view()),
         url(r'^hero$', HeroView.as_view()),
         url(r'^story/(?P<id>\w+)$', StoryView.as_view()),
+        url(r'^query/story$', QueryStoryView.as_view()),
         url(r'^add/story$', AddStoryView.as_view()),
         url(r'^add/note/(?P<story_id>\w+)$', AddNoteView.as_view()),
         url(r'^editor/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', EditorNoteView.as_view()),

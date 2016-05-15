@@ -19,10 +19,18 @@
                 </a>
                 </li>
                 <li>
+
+                {% if user.is_authenticated %}
                 <a href="/add/story">
                     <span class="glyphicon glyphicon-globe"></span>
                     增加故事
                 </a>
+                {% else %}
+                <a  data-toggle="modal" data-target="#login-modal"  style="padding-right:0px;cursor:pointer;">
+                     <span class="glyphicon glyphicon-globe"></span>
+                    增加故事
+                </a>
+                {% endif %}
                 <!--</li>-->
                 <!--<li>-->
                 <!--<a href="/news">-->
@@ -44,7 +52,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if not user.is_authenticated %}
                 <li>
-                    <a  id="nav-login" data-toggle="modal" data-target="#login-modal"  style="padding-right:0px;cursor:pointer;">
+                        <a  id="nav-login" data-toggle="modal" data-target="#login-modal"  style="padding-right:0px;cursor:pointer;">
                     登陆
                     </a>
                 </li>
@@ -122,7 +130,7 @@
     </div><!-- /.modal -->
 </div>
 
-<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" 
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog"
     aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
