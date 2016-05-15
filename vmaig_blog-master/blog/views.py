@@ -115,6 +115,7 @@ class StoryView(BaseMixin, ListView):
     template_name = 'time/story.html'
     context_object_name = 'story'
 
+    queryset = Story.objects.all()
     # def get(self, request, *args, **kwargs):
         # 获取当前用户
 
@@ -133,7 +134,9 @@ class StoryView(BaseMixin, ListView):
         kwargs['story_id'] = _id
 
         # print _id
-
+        #吧story的评论一起丢到前台
+        kwargs['comment_list'] = \
+            self.queryset.get(id=_id).comment_set.all()
 
 
         return super(StoryView, self).get_context_data(**kwargs)
