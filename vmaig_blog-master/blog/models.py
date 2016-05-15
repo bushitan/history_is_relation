@@ -164,6 +164,7 @@ class Story(models.Model):
     occur_date = models.DateField(u'发生时间', null=True)
     death_date = models.DateField(u'结束时间', null=True)
     mirror = models.TextField(blank=True, null=True, verbose_name=u'鉴')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=u'作者')
     class Meta:
         verbose_name_plural = verbose_name = u'历史故事'
         app_label = string_with_title('blog', u"以史为鉴")

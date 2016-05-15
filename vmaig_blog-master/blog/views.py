@@ -154,6 +154,9 @@ class AddStoryView(BaseMixin, ListView):
         _occur_date = self.request.POST.get("occur_date", "")
         _death_date = self.request.POST.get("death_date", "")
         _mirror = self.request.POST.get("mirror", "")
+        # _author_id = self.request.POST.get("author_id", "")
+
+
 
         #创建的story存在，跳转至页面
         if Story.objects.filter(title=_title).exists():
@@ -162,11 +165,14 @@ class AddStoryView(BaseMixin, ListView):
 
         #创建新story
         else:
+            #查询作者
+
             _newStory = Story(
                 title = _title,
                 # occur_date = _occur_date,
                 # death_date = _death_date,
-                mirror = _mirror
+                mirror = _mirror,
+                author = VmaigUser.objects.get(id = user.id)
             )
             _newStory.save()
             _id = _newStory.id
@@ -176,6 +182,17 @@ class AddStoryView(BaseMixin, ListView):
             content_type="application/json"
         )
         # return super(AddStoryView, self).get(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        if not user.is_authenticated():
+            logger.error(
+                u'[CommentControl]当前用户非活动用户:[{}]'.format(
+                    user.username
+                )
+            )
+            return HttpResponse(u"请登陆！", status=403)
+        return super(AddStoryView, self).get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         return super(AddStoryView, self).get_context_data(**kwargs)
     def get_queryset(self):

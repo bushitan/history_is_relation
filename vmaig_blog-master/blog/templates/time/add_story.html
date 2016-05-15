@@ -3,9 +3,9 @@
 {%block main%}
 
 
-    <link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">
-	<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
+    <!--<link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+	<!--<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">-->
+	<!--<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">-->
 <div class="container">
         <style>
 			ul.timeline {
@@ -91,28 +91,28 @@
 			{% endif %}
 		</h2>
 
-		<ul class="timeline">
-			{% if note_list %}
-				{% for note in note_list %}
-					{% if note.style == 1 %}
-						<li  class= "alt-y">
-					{%else%}
-						<li>
-					{% endif %}
-						<div class="time">{{note.occur_date}}</div>
-						<div class="version">{{note.mark}}</div>
-						<div class="number">{{note.mark |slice:"1" }}</div>
-						<div class="content">
-							 {% autoescape off%}
-							{{note.description}}
-							{% endautoescape %}
-							<!--<pre>{{note.description}}-->
-							<!--</pre>-->
-						</div>
-					</li>
-				{% endfor %}
-			{% endif %}
-		</ul>
+		<!--<ul class="timeline">-->
+			<!--{% if note_list %}-->
+				<!--{% for note in note_list %}-->
+					<!--{% if note.style == 1 %}-->
+						<!--<li  class= "alt-y">-->
+					<!--{%else%}-->
+						<!--<li>-->
+					<!--{% endif %}-->
+						<!--<div class="time">{{note.occur_date}}</div>-->
+						<!--<div class="version">{{note.mark}}</div>-->
+						<!--<div class="number">{{note.mark |slice:"1" }}</div>-->
+						<!--<div class="content">-->
+							 <!--{% autoescape off%}-->
+							<!--{{note.description}}-->
+							<!--{% endautoescape %}-->
+							<!--&lt;!&ndash;<pre>{{note.description}}&ndash;&gt;-->
+							<!--&lt;!&ndash;</pre>&ndash;&gt;-->
+						<!--</div>-->
+					<!--</li>-->
+				<!--{% endfor %}-->
+			<!--{% endif %}-->
+		<!--</ul>-->
 
 
 
@@ -149,6 +149,7 @@
 				"occur_date":$("#occur_date").val(),
 				"death_date":$("#death_date").val(),
 				"mirror":$("#mirror").val()
+//				"author_id": '{{user.id}}'
 			},
             beforeSend:function(xhr){
                 xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
