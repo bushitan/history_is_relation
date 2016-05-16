@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 from django.conf.urls import url
 from blog.views import (IndexView, ArticleView, AllView, SearchView,
                         ColumnView, UserView, NewsView, TagView, CategoryView,
                         TimeLineIndexView,HeroView,StoryView,AddStoryView,AddNoteView,EditorNoteView,DeleteNoteView,CommentNoteView,
-                        CommentTestView,QueryStoryView)
+                        CommentTestView,QueryStoryView,SearchStoryView)
 from django.views.generic import TemplateView, DetailView
 from blog.models import News
 
@@ -32,12 +33,13 @@ urlpatterns = [
         url(r'^story/(?P<id>\w+)$', StoryView.as_view()),
         url(r'^query/story$', QueryStoryView.as_view()),
         url(r'^add/story$', AddStoryView.as_view()),
+        url(r'^search/story$$', SearchStoryView.as_view()), #
+
         url(r'^add/note/(?P<story_id>\w+)$', AddNoteView.as_view()),
         url(r'^editor/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', EditorNoteView.as_view()),
         url(r'^delete/note/(?P<note_id>\w+)/(?P<story_id>\w+)$', DeleteNoteView.as_view()),
 
-
-        url(r'^comment/story/(?P<story_id>\w+)$', CommentNoteView.as_view()),
+        url(r'^comment/story/(?P<story_id>\w+)$', CommentNoteView.as_view()),#每个故事对应一个评论模块
 
 
 

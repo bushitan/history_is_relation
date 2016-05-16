@@ -30,6 +30,7 @@
                      <span class="glyphicon glyphicon-globe"></span>
                     增加故事
                 </a>
+
                 {% endif %}
                 <!--</li>-->
                 <!--<li>-->
@@ -38,7 +39,13 @@
                     <!--新闻-->
                 <!--</a>-->
                 </li>
-                
+
+                <li>
+                    <a >
+                       {% include "./time/search_nav.html"%}
+                    </a>
+                </li>
+
                 {% if nav_list%}
                 {% for nav in nav_list%}
                 <li>

@@ -1,0 +1,185 @@
+{% extends "./blog/base.html" %}
+
+{% block main%}
+
+<!--<div class="row">-->
+    <!--<div id="vmaig-content" class="col-md-8 col-lg-9">-->
+        <!--<div id="all-post-list" class="well">-->
+
+            <!--{% if story_list %}-->
+            <!--{% with post_list=story_list %}-->
+            <!--{% for post in post_list %}-->
+                <!--{% include "./time/search_post.html"%}-->
+            <!--{% endfor %}-->
+            <!--{% endwith %}-->
+            <!--{% endif %}-->
+
+            <!-- -->
+        <!--</div>-->
+        <!--&lt;!&ndash;分页 &ndash;&gt;-->
+        <!--<ul class="pager">-->
+            <!--{% if  page_obj.has_previous %}-->
+                <!--<li class="previous">-->
+                    <!--<a href="?s={{s}}&page={{page_obj.previous_page_number}}">&larr; 上一页</a>-->
+                <!--</li>-->
+            <!--{% else %}-->
+                <!--<li class="previous disabled">-->
+                    <!--<a>&larr; 上一页</a>-->
+                <!--</li>-->
+            <!--{% endif %}-->
+
+            <!--<li class="page-number">{{page_obj.number}}/{{paginator.num_pages}}</li>-->
+
+            <!--{% if  page_obj.has_next%}-->
+                <!--<li class="next">-->
+                    <!--<a href="?s={{s}}&page={{page_obj.next_page_number}}">下一页 &rarr;</a>-->
+                <!--</li>-->
+            <!--{% else %}-->
+                <!--<li class="next disabled">-->
+                    <!--<a>下一页 &rarr;</a>-->
+                <!--</li>-->
+            <!--{% endif %}-->
+        <!--</ul>-->
+       <!-- -->
+
+    <!--</div>-->
+    <!--<div id="vmaig-side" class="col-md-4 col-lg-3 hidden-xs">-->
+        <!--{% include "./blog/widgets/tags_cloud.html"%}-->
+        <!--{% include "./blog/widgets/search.html"%}-->
+        <!--{% include "./blog/widgets/hotest_posts.html"%}-->
+        <!--{% include "./vmaig_comments/latest_comments.html"%}-->
+    <!--</div>-->
+<!--</div>-->
+
+
+ <style>
+			ul.timeline {
+				list-style-type: none;
+				background: url("http://fineui.com/res/img/version_line.png") repeat-y scroll 120px 0 transparent;
+				margin: 50px 0;
+				padding: 0;
+			}
+
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .new-btn{
+				position: relative;
+				height: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 10px;
+				color: #999;
+			}
+
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 20px;
+				font-size: 20px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("http://fineui.com/res/img/version_dot_alt.png");
+			}
+
+			ul.timeline li .content {
+				margin-left: 180px;
+
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 20px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
+
+			ul.timeline li.alt-y .content pre {
+				background-color: #ffbd40;
+
+				/*background-color: #FF9900;*/
+			}
+
+			a.number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+		</style>
+
+	<ul class="timeline">
+			{% if note_list %}
+				{% for note in note_list %}
+					{% if note.style == 1 %}
+						<li  class= "alt-y">
+					{%else%}
+						<li>
+					{% endif %}
+
+							<div class="time">
+
+								{{note.occur_date | date:"Y-m-d"}}</div>
+							<div class="version">{{note.title}}</div>
+							<div class="number">{{note.title |slice:"1" }}</div>
+							<div class="content">
+								{% if user.id ==  story.author.id %}
+								<a href="/editor/note/{{note.id}}/{{story_id}}">
+									<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAACOElEQVQ4y1VTP6vdRRA958zulSRaWdiIIVhZiyDYBBFBVAiBQOoH732BYGFlIZZWNtfbWPgBLAKijTYB8TMIaQIJGGwSgnl3d+ZYvP09cKplmJ0/5w9tMzMtCSQJgJlZALBysA3bIImqQkQIgDPTnHMiIrjf720bEQGuAIDMLEmcc1rS65JeyczHZ2dnkKQmCYfDwYfDARHBzPRqgjlnAUBEwPb7JO+RPI4xfo2IH09PT0sAQJKSkJleU73ykIQ55we238zMrzPzCODDqnqrqiCSIMmqgu3LuzOzMhOZ+Xbv/R1JTyLibkR8B8AR8bdtCAB9EdtnbsD13m8DeG+M8XNV3ZH0C4DrrbVvxhj/RoRaZjozQRIRoaqqiAhJt6rqs91u56p61/a3tj+acz5orT3svQtAiSR672EbY4xalN0aY3wC4LyqZma+Junm8Xi8D+CvzKwN4CaJVVWSEBEaY9wm+WlEnC8KLenqnPNh7/0f28hMSAIANPw/XpX0FMALkv3iEl2rqu9ba38swkhewFZVkG1voplzfkHyc5JfkXyZmTvbP1TVAwCoqtpoBwDbaFWFOWdJeoPkjTHGM9tfSvqp937F9u8RwW3QmuzVA217jDFuAnhO8grJR5L+BHC+CWvzwkb3kn00SWqtcbfbfQzgtzHGfQDPqgqZidYalya0NkVrLSLCAMyF6LX9fv+i9x6ZmUuZXqxsd6O1JtsGgJOTkwvPbCJaq11ae9VB0qXFlze4eSUi+B9O/YvJay0FCgAAAABJRU5ErkJggg==" />
+								</a>
+								{% endif %}
+								<pre>{% autoescape off%}{{note.mirror}}{% endautoescape %}</pre>
+								<!--<pre>{{note.description}}-->
+								<!--</pre>-->
+							</div>
+						</li>
+
+					<!--{% if note.mirror %}-->
+						<!--<li  class= "alt-y">-->
+							<!--<div class="content"><pre>{% autoescape off%}{{note.mirror}}{% endautoescape %}</pre>-->
+							<!--</div>-->
+						<!--</li>-->
+					<!--{% endif %}-->
+
+				{% endfor %}
+			{% endif %}
+			<!--<li>-->
+				<!--<a class="number "  href="/add/note/{{story_id}}">+</a>-->
+							<!--&lt;!&ndash;<div class="number new-btn">{{note.mark |slice:"1" }}</div>&ndash;&gt;-->
+				<!--<div class="content new-btn" >  </div>-->
+			<!--</li>-->
+    </ul>
+
+
+
+{% endblock%}
+
