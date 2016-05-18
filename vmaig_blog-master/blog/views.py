@@ -144,7 +144,7 @@ class StoryView(BaseMixin, ListView):
     def get_queryset(self):
         _id = self.kwargs.get('id', '')
         story = Story.objects.get(id=_id)
-        print story.title
+        # print story.title
         return story
         # article_list = Article.objects.filter(status=0)
         # return article_list

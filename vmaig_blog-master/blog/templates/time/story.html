@@ -149,7 +149,13 @@
 				{% endfor %}
 			{% endif %}
 			<li>
-				<a class="number "  href="/add/note/{{story_id}}">+</a>
+				<a class="number "  href="/add/note/{{story_id}}">
+					{% if user.id ==  story.author.id %}
+						+
+					{%else%}
+						催
+					{% endif %}
+				</a>
 							<!--<div class="number new-btn">{{note.mark |slice:"1" }}</div>-->
 				<div class="content new-btn" >  </div>
 			</li>
