@@ -120,11 +120,23 @@ class StoryView(BaseMixin, ListView):
         # 获取当前用户
 
 
+    def get(self, request, *args, **kwargs):
+        print 'liulanqi',request.META['HTTP_USER_AGENT'],request.META['HTTP_USER_AGENT'].lower().find('mobile')
 
+        #手机、PC 双版本跳转测试
+        if request.META['HTTP_USER_AGENT'].lower().find('mobile') > 0:
+            self.template_name = 'time/note.html'
+            print  self.template_name
+
+        print   self.template_name
+
+        return super(StoryView, self).get(request, *args, **kwargs)
+        # return super(StoryView, self).get_context_data(**kwargs)
 
     def get_context_data(self, **kwargs):
 
         _id = self.kwargs.get('id', '')
+
         _story = Story.objects.filter(id=_id)
         note_list = []
         temp_note_list = RelStoryNote.objects.filter(story=_id)
