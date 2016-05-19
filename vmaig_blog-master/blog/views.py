@@ -125,7 +125,7 @@ class StoryView(BaseMixin, ListView):
 
         #手机、PC 双版本跳转测试
         if request.META['HTTP_USER_AGENT'].lower().find('mobile') > 0:
-            self.template_name = 'time/note.html'
+            self.template_name = 'mobile/story.html'
             print  self.template_name
 
         print   self.template_name

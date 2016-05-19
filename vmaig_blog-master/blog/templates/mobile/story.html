@@ -1,0 +1,190 @@
+{% extends "./blog/base.html" %}
+
+{%block main%}
+
+    <!--<link href="http://fineui.com/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+	<!--<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">-->
+	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
+<div class="container">
+        <style>
+			ul.timeline {
+				list-style-type: none;
+				background: url("http://fineui.com/res/img/version_line.png") repeat-y scroll 0px 0 transparent;
+				margin: 50px  0;
+				padding: 0;
+			}
+
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .new-btn{
+				position: relative;
+				height: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 290px;
+				text-align: left;
+				left: 50px;
+				top: 0px;
+				color: #999;
+			}
+
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 20px;
+				font-size: 20px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: -23px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("http://fineui.com/res/img/version_dot_alt.png");
+			}
+
+			ul.timeline li .content {
+				margin-left: 50px;
+
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 15px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
+
+			ul.timeline li.alt-y .content pre {
+				background-color: #ffbd40;
+
+				/*background-color: #FF9900;*/
+			}
+
+			a.number {
+				position: absolute;
+				background: url("http://fineui.com/res/img/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+		</style>
+
+
+
+ 		<h2 style="text-align: center;color:#999 ">
+			{% if story %}
+				{{story.title}}
+			{% endif %}
+		</h2>
+		<!--<div>-->
+			<!--<form id="note-create-form" method="post" role="form">-->
+				<!--<ul>-->
+					<!--<li><span>发生时间：</span><span><input id="occur_date" type="text" /></span></li>-->
+					<!--<li><span>标志：</span><span><input id='mark' type="text" /></span></li>-->
+					<!--<li><span>描述：</span><span><input id="description" type="text"  /></span></li>-->
+					<!--&lt;!&ndash;<li><span>类别：</span><span><textarea id="style" ></textarea></span></li>&ndash;&gt;-->
+				<!--</ul>-->
+				<!--<button type="submit">创建便签</button>-->
+			  <!--</form>-->
+		<!--</div>-->
+
+		<!--<a href="/add/note/{{story_id}}">创建标签</a>-->
+
+
+		<ul class="timeline">
+			{% if note_list %}
+				{% for note in note_list %}
+					{% if note.style == 1 %}
+						<li  class= "alt-y">
+					{%else%}
+						<li>
+					{% endif %}
+
+							<!--<div class="time">-->
+
+								<!--{{note.occur_date | date:"Y-m-d"}}</div>-->
+							<!--<div class="version">{{note.mark}}</div>-->
+							<div class="number">{{note.mark |slice:"1" }}</div>
+							<div class="content">
+
+								<div class="row">     &nbsp;
+									{% if user.id ==  story.author.id %}
+									<a href="/editor/note/{{note.id}}/{{story_id}}">    <!-- style="float: right;padding-right: 20px;"-->
+										<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAACOElEQVQ4y1VTP6vdRRA958zulSRaWdiIIVhZiyDYBBFBVAiBQOoH732BYGFlIZZWNtfbWPgBLAKijTYB8TMIaQIJGGwSgnl3d+ZYvP09cKplmJ0/5w9tMzMtCSQJgJlZALBysA3bIImqQkQIgDPTnHMiIrjf720bEQGuAIDMLEmcc1rS65JeyczHZ2dnkKQmCYfDwYfDARHBzPRqgjlnAUBEwPb7JO+RPI4xfo2IH09PT0sAQJKSkJleU73ykIQ55we238zMrzPzCODDqnqrqiCSIMmqgu3LuzOzMhOZ+Xbv/R1JTyLibkR8B8AR8bdtCAB9EdtnbsD13m8DeG+M8XNV3ZH0C4DrrbVvxhj/RoRaZjozQRIRoaqqiAhJt6rqs91u56p61/a3tj+acz5orT3svQtAiSR672EbY4xalN0aY3wC4LyqZma+Junm8Xi8D+CvzKwN4CaJVVWSEBEaY9wm+WlEnC8KLenqnPNh7/0f28hMSAIANPw/XpX0FMALkv3iEl2rqu9ba38swkhewFZVkG1voplzfkHyc5JfkXyZmTvbP1TVAwCoqtpoBwDbaFWFOWdJeoPkjTHGM9tfSvqp937F9u8RwW3QmuzVA217jDFuAnhO8grJR5L+BHC+CWvzwkb3kn00SWqtcbfbfQzgtzHGfQDPqgqZidYalya0NkVrLSLCAMyF6LX9fv+i9x6ZmUuZXqxsd6O1JtsGgJOTkwvPbCJaq11ae9VB0qXFlze4eSUi+B9O/YvJay0FCgAAAABJRU5ErkJggg==" />
+									</a>
+									{% endif %}
+								</div>
+
+
+								<pre>{% autoescape off%}{{note.description}}{% endautoescape %}</pre>
+								<!--<pre>{{note.description}}-->
+								<!--</pre>-->
+							</div>
+						</li>
+
+					<!--{% if note.mirror %}-->
+						<!--<li  class= "alt-y">-->
+							<!--<div class="content"><pre>{% autoescape off%}{{note.mirror}}{% endautoescape %}</pre>-->
+							<!--</div>-->
+						<!--</li>-->
+					<!--{% endif %}-->
+
+				{% endfor %}
+			{% endif %}
+			<li>
+				<a class="number "  href="/add/note/{{story_id}}">
+					{% if user.id ==  story.author.id %}
+						+
+					{%else%}
+						催
+					{% endif %}
+				</a>
+							<!--<div class="number new-btn">{{note.mark |slice:"1" }}</div>-->
+				<div class="content new-btn" >  </div>
+			</li>
+		</ul>
+
+		<p style="text-align: right;">
+			<a href="/comment/story/{{story_id}}">评论
+				<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAEIklEQVRIx11WPaidRRA9Z2b2apJn0EIbf6JB/MGIJhEbDQ9EGxFBBYmVqGCfxs5OBEG0EVQsYyFYBZsIIgTESgtrCxsrnwjyzI15384ci7d7uWabhfvdmdk9PzNLScxMmRlIEgAzswBg/AZJkASSqCq4uwFQZsrdUVUwM0hCVYEkzMwAIMafWFWqKrm73J0ACACSiiSrSiQx/lsAZqHC4eI4YI3kJQkxCmkEcHd3V+v1GiTRexeAO9x9b9yAJLksiyKCkiozMWJ19OhRXblyBaOokyyb1c0MVaX9/X1kpsaR7jKzC733c5Juykyf8I0bIyJoZshM7O/vg6SNCwoA4vBWYFVJ0gbLzFRm7pK8p7V2j6RTABrJL6pq7e62LEtJkplRkkbhGjlLEmxgvUk+UICk21trzwL4dFmWVVU9YWZnAFyIiCPLslRrzQapnPGT5LksMzUJJGmS5O4eEa9J+ma1Wj0SEc+RXEta995Pkny7tbYzyc7MmsqJCAxejCRtfPABSw1JProsy+8AbquqpzNzz8w+Ozg4+BXATZl5pvf+OoCbp4QHtNris4b8bUoL7m5Vharac/e7M/OpqrpuZh/23k+21h42s4tV9beZnQXwTmvt+FTYlPqEzN3NcMMyswbgVZJPuvtVd38PwP0R8QrJ981sHRHHhqn+6r1fI4nM1EBjQ7ikCkkiaQB0KAC+RfI0yT9675+QPF1VL5jZB1V1yszOkxSAbyVdjAj23jF2DcPB3QGAMVgvMyPJY5l5r6Qys0uttVOSXnL3dyU9RvJFSb2qviP51fbNSdLdNQ6qCf30wXTtAYAieWBm50fsu5l5QtLLJEvSj2Z2URJWq1WMPtSnbDOzRgvBJNmGvCwiVsMXP1fVtWVZ/gTwlKQ3WmsB4Hsz+zwi3N1N0gkAz0tiRHC2G0kFQGYGm1oeO93dIuIXkldba3f23s8BqN775Yj42sxYVbUsS1XVrZn5oLu3zNR09uxPHORiVBy3yn+q6k1JR3rvexHRW2s/S/qy9359C06QrNn0tt0bEVZVAsAYp5/2XpvZR1Wl1lqb33rvf8/gqnrAzE6YWa+qu0geJ/lMZi6ttayqH9xdm3kwKw8nlrtfG2Sy967Wmk3TLMtSEXFfZp7NzH8B7AA4BuBxMxOAtbv/lJnroSjEsLkB0ND3nGwY06oGLBURrKrLAC6PAz5E8nkAHwNQ730D06aFbHMw4JgJNxKbAbOlz+Xut5BckVzd2BGmq6eOMWQ1W7fcHcuylLsf9hQzzSEzE5AskjUPMPfh4kMfRMTmlJmpnZ2dabyZhMuyVO9dQ8IbvZP8raouAehmxhk7vER3J+erYovszXSbL4r5uhjzo9wdmfm/79vYz93MDjkYEMwkm9fDvNmAxbbG4Zwj3CZ0K7HPuP8A5SYvdG+aepUAAAAASUVORK5CYII=">
+			</a>
+		</p>
+
+
+		<div>{{user_id}}</div>
+
+		<!--<div style="margin-left:180px;">-->
+			<!--<button id="fetchNextData" class="btn btn-large btn-info" style="width:100%;">后二十条数据</button>-->
+		<!--</div>-->
+        <!--<br>-->
+		<!--<br>-->
+	 {% include "./blog/widgets/tags_cloud.html"%}
+    </div>
+
+<script language="javascript" type="text/javascript">
+
+</script>
+
+{% endblock %}
