@@ -6,9 +6,12 @@ from blog.views import (IndexView, ArticleView, AllView, SearchView,
                         CommentTestView,QueryStoryView,SearchStoryView)
 from django.views.generic import TemplateView, DetailView
 from blog.models import News
+from django.views.generic import RedirectView
 
 urlpatterns = [
-        url(r'^$', IndexView.as_view()),
+        url(r'^index$', IndexView.as_view()),
+        url(r'^$',RedirectView.as_view(url='/story/3')),
+
         url(r'^article/(?P<slug>\w+).html$', ArticleView.as_view()),
         url(r'^all/$', AllView.as_view()),
         url(r'^search/$', SearchView.as_view()),
