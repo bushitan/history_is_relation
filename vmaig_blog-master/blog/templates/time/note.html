@@ -41,9 +41,9 @@
 		width: 290px;
 		text-align: right;
 		left: -200px;
-		top: 20px;
-		font-size: 20px;
-		line-height: 50px;
+		top: 50px;
+		/*font-size: 20px;*/
+		/*line-height: 50px;*/
 		color: #3594cb;
 		overflow: hidden;
 	}
@@ -134,42 +134,52 @@ img.intLink { border: 0; }
 						<div class="time">
 							<span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span>
 						</div>
-						<div class="version">{{note.mark}}</div>
+						<div class="version"><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></div>
 						<div class="number">{{note.mark |slice:"1" }}</div>
+						<div style="display:none"><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></div>
 						<div class="content">
-							<pre>   </pre>
+							<!--<pre>-->
+								<form name="compForm">
+									<input type="hidden" name="myDoc">
+									<div id="toolBar2">
+										<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
+									</div>
+									<div id="description" contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>
+									<!--<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>-->
+								</form>
+							<!--</pre>-->
 						</div>
 					</li>
 				</ul>
 
-				<ul>
-					<li><span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span></li>
-					<li><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></li>
-					<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>
-					<li><span>描述：</span><span>
-						<!--<textarea id="description" >{{note.description}}</textarea>-->
-						<form name="compForm">
-							<input type="hidden" name="myDoc">
-							<div id="toolBar2">
-								<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
-							</div>
-							<div id="description" contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>
-							<!--<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>-->
-						</form>
-					</span></li>
-					<!--<li><span>鉴：</span><span><textarea id="mirror" >{{note.mirror}}</textarea></span></li>-->
+				<!--<ul>-->
+					<!--<li><span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span></li>-->
+					<!--<li><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></li>-->
+					<!--<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>-->
+					<!--<li><span>描述：</span><span>-->
+						<!--&lt;!&ndash;<textarea id="description" >{{note.description}}</textarea>&ndash;&gt;-->
+						<!--<form name="compForm">-->
+							<!--<input type="hidden" name="myDoc">-->
+							<!--<div id="toolBar2">-->
+								<!--<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />-->
+							<!--</div>-->
+							<!--<div id="description" contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>-->
+							<!--&lt;!&ndash;<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>&ndash;&gt;-->
+						<!--</form>-->
+					<!--</span></li>-->
+					<!--&lt;!&ndash;<li><span>鉴：</span><span><textarea id="mirror" >{{note.mirror}}</textarea></span></li>&ndash;&gt;-->
 
-				</ul>
+				<!--</ul>-->
 
 
 
 			{% else %}
 				<p>
-					</ul>
+					<!--</ul>-->
 					<form id="note-create-form" method="post" role="form">
-					<button type="submit">创建标签</button>
-					<button type="button" onclick="window.location.href='/story/{{story_id}}'">取消</button>
-			  	</form>
+						<button type="submit">创建标签</button>
+						<button type="button" onclick="window.location.href='/story/{{story_id}}'">取消</button>
+					</form>
 				</p>
 				<ul>
 					<li><span>发生时间：</span><span><input id='occur_date' type="text" ></span></li>
@@ -187,7 +197,7 @@ img.intLink { border: 0; }
 						</form>
 					</span></li>
 					<!--<li><span>鉴：</span><span><textarea id="mirror" ></textarea></span></li>-->
-
+				</ul>
 
 			{% endif %}
 		</div>
