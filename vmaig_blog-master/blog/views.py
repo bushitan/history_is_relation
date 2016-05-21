@@ -194,6 +194,7 @@ class AddStoryView(BaseMixin, ListView):
         _death_date = self.request.POST.get("death_date", "")
         _mirror = self.request.POST.get("mirror", "")
         # _author_id = self.request.POST.get("author_id", "")
+        user = self.request.user # 获取用户
 
 
 

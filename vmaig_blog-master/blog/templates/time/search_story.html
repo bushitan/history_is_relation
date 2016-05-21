@@ -140,6 +140,7 @@
 	<ul class="timeline">
 			{% if note_list %}
 				{% for note in note_list %}
+					<a href="/story/{{note.id}}">
 					{% if note.style == 1 %}
 						<li  class= "alt-y">
 					{%else%}
@@ -162,15 +163,9 @@
 								<!--</pre>-->
 							</div>
 						</li>
-
-					<!--{% if note.mirror %}-->
-						<!--<li  class= "alt-y">-->
-							<!--<div class="content"><pre>{% autoescape off%}{{note.mirror}}{% endautoescape %}</pre>-->
-							<!--</div>-->
-						<!--</li>-->
-					<!--{% endif %}-->
-
+					</a>
 				{% endfor %}
+
 			{% endif %}
 			<!--<li>-->
 				<!--<a class="number "  href="/add/note/{{story_id}}">+</a>-->
