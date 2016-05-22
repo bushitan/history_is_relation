@@ -100,7 +100,7 @@ class TimeLineIndexView(BaseMixin, ListView):
 
     def get_queryset(self):  #只做参数的查询
         story_list = Story.objects.all()
-        print story_list
+        # print story_list
         return story_list
 
 class HeroView(BaseMixin, ListView):
@@ -121,14 +121,14 @@ class StoryView(BaseMixin, ListView):
 
 
     def get(self, request, *args, **kwargs):
-        print 'liulanqi',request.META['HTTP_USER_AGENT'],request.META['HTTP_USER_AGENT'].lower().find('mobile')
+        # print 'liulanqi',request.META['HTTP_USER_AGENT'],request.META['HTTP_USER_AGENT'].lower().find('mobile')
 
         #手机、PC 双版本跳转测试
         if request.META['HTTP_USER_AGENT'].lower().find('mobile') > 0:
             self.template_name = 'mobile/story.html'
-            print  self.template_name
+            # print  self.template_name
 
-        print   self.template_name
+        # print   self.template_name
 
         return super(StoryView, self).get(request, *args, **kwargs)
         # return super(StoryView, self).get_context_data(**kwargs)
@@ -168,7 +168,7 @@ class QueryStoryView(BaseMixin, ListView):
 
         _title = self.request.POST.get("title", "")
         _storys =  Story.objects.filter(title__contains=_title)
-        print
+        # print
         _list = []
         for _story in _storys :
             _list.append({
@@ -267,7 +267,7 @@ class SearchStoryView(BaseMixin, ListView):
             Q(title__icontains=s)
         )
 
-        print note_list
+        # print note_list
         return note_list
 
 
@@ -282,7 +282,7 @@ class AddNoteView(BaseMixin, ListView):
 
         return super(AddNoteView, self).get(request, *args, **kwargs)
     def post(self, request, *args, **kwargs):
-        print "OK"
+        # print "OK"
         _story_id  = self.kwargs.get('story_id', '')
         # _story_id = self.request.POST.get("story_id", "")
         _occur_date = self.request.POST.get("occur_date", "")
@@ -316,7 +316,7 @@ class AddNoteView(BaseMixin, ListView):
 
         #把获取的数据又传到前台
         mydict = {"url": '/story/'+ _story_id }
-        print _story_id ,2
+        # print _story_id ,2
         # mydict = {
         #     "occur_date": _occur_date,
         #     "mark": _mark,
@@ -357,7 +357,7 @@ class EditorNoteView(BaseMixin, ListView):
         _mirror = self.request.POST.get("mirror", "")
         _style = int(self.request.POST.get("style", ""))
 
-        print _occur_date
+        # print _occur_date
         #修改note
         _updateNote = Note.objects.get(id = _note_id )
         if _occur_date == '':
@@ -368,7 +368,7 @@ class EditorNoteView(BaseMixin, ListView):
         _updateNote.description = _description
         _updateNote.mirror = _mirror
         # print _mark,_description
-        print _updateNote.style,_updateNote.description
+        # print _updateNote.style,_updateNote.description
         _updateNote.style = _style
         _updateNote.save()
 
@@ -397,7 +397,7 @@ class DeleteNoteView(BaseMixin, ListView):
         _note_id = self.kwargs.get('note_id', '')
         _story_id  = self.kwargs.get('story_id', '')
 
-        print Note.objects.filter(id=_note_id).exists()
+        # print Note.objects.filter(id=_note_id).exists()
         if  Note.objects.filter(id=_note_id).exists():
             _note = Note.objects.get(id=_note_id)
             _story = Story.objects.get(id=_story_id)

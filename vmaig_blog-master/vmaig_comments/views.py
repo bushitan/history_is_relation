@@ -26,7 +26,7 @@ class CommentControl(View):
         user = self.request.user
         # 获取评论
         comment = self.request.POST.get("comment", "")
-        print 'OK'
+        # print 'OK'
 
         _story_id = self.kwargs.get('story_id', '')
         # _note_id = self.kwargs.get('note_id', '')
@@ -47,7 +47,7 @@ class CommentControl(View):
             )
             return HttpResponse(u"请输入评论内容！", status=403)
 
-        print 'OK1'
+        # print 'OK1'
         # en_title = self.kwargs.get('slug', '')
         try:
             # 默认使用pk来索引(也可根据需要使用title,en_title在索引
@@ -56,7 +56,7 @@ class CommentControl(View):
             logger.error(u'[CommentControl]此便签不存在:[%s]' % _story_id)
             raise PermissionDenied
 
-        print 'OK2'
+        # print 'OK2'
         # 保存评论
         comment = Comment.objects.create(
                 user=user,
