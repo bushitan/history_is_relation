@@ -101,15 +101,18 @@ class UserControl(View):
                 u"网站：http://{}\n\n".format(domain),
             ])
             from_email = None
-            try:
-                send_mail(title, message, from_email, [email])
-            except Exception as e:
-                logger.error(
-                    u'[UserControl]用户注册邮件发送失败:[{}]/[{}]'.format(
-                        username, email
-                    )
-                )
-                return HttpResponse(u"发送邮件错误!\n注册失败", status=500)
+            #暂时取消注册发邮件
+            # try:
+            #     send_mail(title, message, from_email, [email])
+            # except Exception as e:
+            #     logger.error("OK1")
+            #     logger.error(e)
+            #     logger.error(
+            #         u'[UserControl]用户注册邮件发送失败:[{}]/[{}]'.format(
+            #             username, email
+            #         )
+            #     )
+            #     return HttpResponse(u"发送邮件错误!\n注册失败", status=500)
 
             new_user = form.save()
             user = auth.authenticate(username=username, password=password2)
@@ -213,6 +216,7 @@ class UserControl(View):
                 content_type="application/json"
             )
         else:
+
             logger.error(
                 u'[UserControl]用户重置密码连接错误:[{}]/[{}]'.format(
                     uid64, token
