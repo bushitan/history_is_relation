@@ -114,6 +114,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "static") #pythonanywhere use
+
 # 设置user model
 AUTH_USER_MODEL = "vmaig_auth.VmaigUser"
 

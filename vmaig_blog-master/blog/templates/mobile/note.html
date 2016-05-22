@@ -7,93 +7,93 @@
 	<!--<link href="http://fineui.com/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">-->
 	<link href="http://fineui.com/res/css/docs.css" rel="stylesheet">
 <style>
-	textarea{
-		height:100px;
-		width:600px;
-	}
+	/*textarea{*/
+		/*height:100px;*/
+		/*width: 100%;*/
+	/*}*/
 
 	ul.timeline {
-		list-style-type: none;
-		background: url("/static/img/history/version_line.png") repeat-y scroll 120px 0 transparent;
-		margin: 50px 0;
-		padding: 0;
-	}
+				list-style-type: none;
+				background: url("/static/img/history/version_line.png") repeat-y scroll 0px 0 transparent;
+				margin: 50px  0;
+				padding: 0;
+			}
 
-	ul.timeline li {
-		position: relative;
-		margin-bottom: 20px;
-	}
-	ul.timeline li .new-btn{
-		position: relative;
-		height: 20px;
-	}
-	ul.timeline li .time {
-		position: absolute;
-		width: 290px;
-		text-align: right;
-		left: -200px;
-		top: 10px;
-		color: #999;
-	}
+			ul.timeline li {
+				position: relative;
+				margin-bottom: 20px;
+			}
+			ul.timeline li .new-btn{
+				position: relative;
+				height: 20px;
+			}
+			ul.timeline li .time {
+				position: absolute;
+				width: 290px;
+				text-align: left;
+				left: 50px;
+				top: 0px;
+				color: #999;
+			}
 
-	ul.timeline li .version {
-		position: absolute;
-		width: 290px;
-		text-align: right;
-		left: -200px;
-		top: 50px;
-		/*font-size: 20px;*/
-		/*line-height: 50px;*/
-		color: #3594cb;
-		overflow: hidden;
-	}
-	ul.timeline li .number {
-		position: absolute;
-		background: url("/static/img/history/version_dot.png") no-repeat scroll 0 0 transparent;
-		width: 56px;
-		height: 56px;
-		left: 97px;
-		line-height: 56px;
-		text-align: center;
-		color: #fff;
-		font-size: 18px;
-	}
-	ul.timeline li.alt .number {
-		background-image: url("/static/img/history/version_dot_alt.png");
-	}
+			ul.timeline li .version {
+				position: absolute;
+				width: 290px;
+				text-align: right;
+				left: -200px;
+				top: 20px;
+				font-size: 20px;
+				line-height: 50px;
+				color: #3594cb;
+				overflow: hidden;
+			}
+			ul.timeline li .number {
+				position: absolute;
+				background: url("/static/img/history/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: -23px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
+			ul.timeline li.alt .number {
+				background-image: url("/static/img/history/version_dot_alt.png");
+			}
 
-	ul.timeline li .content {
-		margin-left: 180px;
+			ul.timeline li .content {
+				margin-left: 50px;
 
-	}
-	ul.timeline li .content pre {
-		background-color: #3594cb;
-		padding: 20px;
-		color: #fff;
-		font-size: 13px;
-		line-height: 20px;
-	}
-	ul.timeline li.alt .content pre {
-		background-color: #43B1F1;
-	}
+			}
+			ul.timeline li .content pre {
+				background-color: #3594cb;
+				padding: 15px;
+				color: #fff;
+				font-size: 13px;
+				line-height: 20px;
+			}
+			ul.timeline li.alt .content pre {
+				background-color: #43B1F1;
+			}
 
-	ul.timeline li.alt-y .content pre {
-		background-color: #ffbd40;
+			ul.timeline li.alt-y .content pre {
+				background-color: #ffbd40;
 
-		/*background-color: #FF9900;*/
-	}
+				/*background-color: #FF9900;*/
+			}
 
-	a.number {
-		position: absolute;
-		background: url("/static/img/history/version_dot.png") no-repeat scroll 0 0 transparent;
-		width: 56px;
-		height: 56px;
-		left: 97px;
-		line-height: 56px;
-		text-align: center;
-		color: #fff;
-		font-size: 18px;
-	}
+			a.number {
+				position: absolute;
+				background: url("/static/img/history/version_dot.png") no-repeat scroll 0 0 transparent;
+				width: 56px;
+				height: 56px;
+				left: 97px;
+				line-height: 56px;
+				text-align: center;
+				color: #fff;
+				font-size: 18px;
+			}
 
 </style>
 <style type="text/css">
@@ -101,8 +101,8 @@
 img.intLink { border: 0; }
 #toolBar1 select { font-size:10px; }
 #description {
-  width: 540px;
-  height: 200px;
+  width: 100%;
+  height: 150px;
   border: 1px #000000 solid;
   padding: 12px;
   overflow: scroll;
@@ -133,12 +133,17 @@ img.intLink { border: 0; }
 				<ul class="timeline">
 					<li>
 						<div class="time">
-							<span></span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}" placeholder="时间：1988-01-02"></span>
+							<!--<span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}" placeholder="时间：1988-01-02"></span>-->
 						</div>
-						<div class="version"><span></span><span><input id="mark" type="text" value="{{note.mark}}" placeholder="标志：历史"/></span></div>
+						<div class="version">
+							<!--<span><input id="mark" type="text" value="{{note.mark}}" placeholder="标志：历史"/></span>-->
+						</div>
 						<div class="number">{{note.mark |slice:"1" }}</div>
 						<div style="display:none"><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></div>
 						<div class="content">
+
+							<span></span><span><input id="mark" type="text" value="{{note.mark}}" placeholder="标志：历史"/></span>
+							<span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}" placeholder="时间：1988-01-02"></span>
 							<!--<pre>-->
 								<form name="compForm">
 									<input type="hidden" name="myDoc">
@@ -153,27 +158,6 @@ img.intLink { border: 0; }
 					</li>
 				</ul>
 
-				<!--<ul>-->
-					<!--<li><span>发生时间：</span><span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}"></span></li>-->
-					<!--<li><span>标志：</span><span><input id="mark" type="text" value="{{note.mark}}"/></span></li>-->
-					<!--<li><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></li>-->
-					<!--<li><span>描述：</span><span>-->
-						<!--&lt;!&ndash;<textarea id="description" >{{note.description}}</textarea>&ndash;&gt;-->
-						<!--<form name="compForm">-->
-							<!--<input type="hidden" name="myDoc">-->
-							<!--<div id="toolBar2">-->
-								<!--<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />-->
-							<!--</div>-->
-							<!--<div id="description" contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>-->
-							<!--&lt;!&ndash;<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>&ndash;&gt;-->
-						<!--</form>-->
-					<!--</span></li>-->
-					<!--&lt;!&ndash;<li><span>鉴：</span><span><textarea id="mirror" >{{note.mirror}}</textarea></span></li>&ndash;&gt;-->
-
-				<!--</ul>-->
-
-
-
 			{% else %}
 				<p>
 					<!--</ul>-->
@@ -185,18 +169,17 @@ img.intLink { border: 0; }
 
 				<ul class="timeline">
 					<li>
-						<div class="time">
-							<span></span><span><input id='occur_date' type="text"  placeholder="时间：1988-01-02"></span>
-						</div>
-						<div class="version"><span></span><span><input id="mark" type="text"  placeholder="标志：历史"/></span></div>
-						<div class="number">{{note.mark |slice:"1" }}</div>
-						<div style="display:none"><span>类别：</span><span><input id="style" type="text" value="0" /></span></div>
+						<div class="number"></div>
+						<div style="display:none"><span>类别：</span><span><input id="style" type="text" value="{{note.style}}" /></span></div>
 						<div class="content">
+
+							<span></span><span><input id="mark" type="text" value="{{note.mark}}" placeholder="标志：历史"/></span>
+							<span><input id='occur_date' type="text" value="{{note.occur_date  | date:'Y-m-d'}}" placeholder="时间：1988-01-02"></span>
 							<!--<pre>-->
 								<form name="compForm">
 									<input type="hidden" name="myDoc">
 									<div id="toolBar2">
-										<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
+										<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('填写Url地址','http:\/\/'),sName=prompt('填写词条名称','');if(sLnk&&sLnk!=''&&sLnk!='http://'&&sName!='' ){formatDoc('insertHtml','<a href='+sLnk+'>'+sName+'</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />
 									</div>
 									<div id="description"  contenteditable="true">{% autoescape off %}{{note.description}}{% endautoescape %}</div>
 									<!--<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>-->
@@ -205,26 +188,6 @@ img.intLink { border: 0; }
 						</div>
 					</li>
 				</ul>
-
-
-				<!--<ul>-->
-					<!--<li><span>发生时间：</span><span><input id='occur_date' type="text" ></span></li>-->
-					<!--<li><span>标志：</span><span><input id="mark" type="text" /></span></li>-->
-					<!--<li><span>类别：</span><span><input id="style" type="text" value="0" /></span></li>-->
-					<!--<li><span>描述：</span><span>-->
-						<!--&lt;!&ndash;<textarea id="description" contenteditable="true" ></textarea>&ndash;&gt;-->
-						<!--<form name="compForm">-->
-							<!--<input type="hidden" name="myDoc">-->
-							<!--<div id="toolBar2">-->
-								<!--<img class="intLink" title="Hyperlink" onclick="var sLnk=prompt('Write the URL here','http:\/\/');if(sLnk&&sLnk!=''&&sLnk!='http://'){formatDoc('insertHtml','<a href='+sLnk+'>tt</a>')}" src="data:image/gif;base64,R0lGODlhFgAWAOMKAB1ChDRLY19vj3mOrpGjuaezxrCztb/I19Ha7Pv8/f///////////////////////yH5BAEKAA8ALAAAAAAWABYAAARY8MlJq7046827/2BYIQVhHg9pEgVGIklyDEUBy/RlE4FQF4dCj2AQXAiJQDCWQCAEBwIioEMQBgSAFhDAGghGi9XgHAhMNoSZgJkJei33UESv2+/4vD4TAQA7" />-->
-							<!--</div>-->
-							<!--<div id="description" contenteditable="true"><p></p></div>-->
-							<!--&lt;!&ndash;<p id="editMode"><input type="checkbox" name="switchMode" id="switchBox" onchange="setDocMode(this.checked);" /> <label for="switchBox">Show HTML</label></p>&ndash;&gt;-->
-						<!--</form>-->
-					<!--</span></li>-->
-					<!--&lt;!&ndash;<li><span>鉴：</span><span><textarea id="mirror" ></textarea></span></li>&ndash;&gt;-->
-				<!--</ul>-->
-
 			{% endif %}
 		</div>
     </div>
@@ -391,6 +354,12 @@ img.intLink { border: 0; }
 //		console.log($("input:radio[name='add-hyperlink']:checked").attr("story"));
 //		return false;
 	});
+
+	$("#mark").blur(function () {
+		var m = $("#mark").val().substring(0,1);
+		$(".number").html(m);
+//<div class="number">{{note.mark |slice:"1" }}</div>
+	})
 
 </script>
 

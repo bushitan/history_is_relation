@@ -275,6 +275,12 @@ class AddNoteView(BaseMixin, ListView):
     template_name = 'time/note.html'
     context_object_name = 'note'
 
+    def get(self, request, *args, **kwargs):
+        #手机、PC 双版本跳转测试
+        if request.META['HTTP_USER_AGENT'].lower().find('mobile') > 0:
+            self.template_name = 'mobile/note.html'
+
+        return super(AddNoteView, self).get(request, *args, **kwargs)
     def post(self, request, *args, **kwargs):
         print "OK"
         _story_id  = self.kwargs.get('story_id', '')
@@ -334,6 +340,13 @@ class EditorNoteView(BaseMixin, ListView):
     template_name = 'time/note.html'
     context_object_name = 'note'
 
+    def get(self, request, *args, **kwargs):
+        #手机、PC 双版本跳转测试
+        if request.META['HTTP_USER_AGENT'].lower().find('mobile') > 0:
+            self.template_name = 'mobile/note.html'
+
+        return super(EditorNoteView, self).get(request, *args, **kwargs)
+
     #修改后的note
     def post(self, request, *args, **kwargs):
         _note_id = self.kwargs.get('note_id', '')
@@ -344,11 +357,13 @@ class EditorNoteView(BaseMixin, ListView):
         _mirror = self.request.POST.get("mirror", "")
         _style = int(self.request.POST.get("style", ""))
 
-        print _description
+        print _occur_date
         #修改note
         _updateNote = Note.objects.get(id = _note_id )
         if _occur_date == '':
             _updateNote.occur_date = None
+        else:
+            _updateNote.occur_date = _occur_date
         _updateNote.mark = _mark
         _updateNote.description = _description
         _updateNote.mirror = _mirror
