@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'blog',
     'vmaig_auth',
     'vmaig_comments',
+    'art',
 )
 
 MIDDLEWARE_CLASSES = (
