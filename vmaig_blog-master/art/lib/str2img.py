@@ -69,6 +69,33 @@ class Str2Img():
         strImg.save(url)
         return r"/static/img/"+filename
 
+    #图片转化像素数组
+    def ImgToMatrix(self,imgPath,WIDTH=50,HEIGHT=50):
+        im = Image.open(imgPath)
+        _matrix = []
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                r,g,b = im.getpixel((j,i))
+                _matrix.append(self.rgb2hex(r,g,b))
+        return _matrix
+
+    #css 专用的16进制表达方式
+    def rgb2hex(self,r,g,b):
+        _h = hex((r << 16) + (g << 8) + b)
+        # _h = "#"+_h[2:].upper()
+        _h = "#"+_h[2:]
+        # return _h.decode("utf-8")
+        return _h
+
+    #16 进制转RGB
+    def hex2rgb(self,hexcolor):
+        hexcolor = int(hexcolor)
+        rgb = [(hexcolor >> 16) & 0xff,
+            (hexcolor >> 8) & 0xff,
+            hexcolor & 0xff
+        ]
+        return rgb
+
 
     def RGB_Average(self,r,g,b,alpha=256):
         if alpha == 0:
@@ -102,6 +129,7 @@ class Str2Img():
                  # R,G,B = self.RGB_Average(*im.getpixel((j,i)))
                  r,g,b = im.getpixel((j,i))
                  R,G,B = self.RGB_Average( r,g,b)
+                 print self.rgb2hex(r,g,b)
                  # im.putpixel((j,i), (R,G,B))
                  _draw.rectangle ( (j*5,i*5,j*5+5,i*5+5) , fill=(R,G,B) )
                  # _draw.rectangle ( (j*5,i*5,j*5+5,i*5+5) , fill=(G,B,R) )
@@ -119,7 +147,8 @@ class Str2Img():
         # _draw.rectangle ( (5,5,0,0) , fill=(R,G,B) )
 
         filename = "\pixel_100x100_{}.png".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
-        filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
+        # filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
+        filedir = r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img"
         url = filedir + filename
         strImg.save(url,"png")
 
@@ -130,8 +159,19 @@ class Str2Img():
 
 if __name__ == '__main__':
     _s = Str2Img()
-    _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\7.jpg" , 50,40)
+    # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")
+    # _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
+    # _s.test_Pixel_Img(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
     # _s.process(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\7.jpg",100,80)
+    # print _s.rgb2hex(157,24,68)
+    # print _s.hex2rgb(0x9d1844)
+
+
+    print _s.hex2rgb(0x9d181b)
+
+    print _s.rgb2hex(157,24,27)
+
+
 
     n = 16
     print ( n /16 + 1 ) * 16 -8

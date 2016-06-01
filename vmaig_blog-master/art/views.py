@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#coding:utf-8
 from django.http import HttpResponse, Http404
 from art.models import *
 from vmaig_comments.models import Comment
@@ -120,11 +120,79 @@ class MainView(BaseMixin, ListView):
             content_type="application/json"
         )
 
+class UploadView(BaseMixin, ListView):
+    template_name = 'art/upload.html'
+
+    def get_context_data(self, **kwargs):
+        return super(UploadView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+    def post(self, request, *args, **kwargs):
+        # 获取上传的图片数据
+        data = request.POST['tx']
+        if not data:
+            logger.error(
+                u'[UserControl]用户上传头像为空:[%s]'.format(
+                    request.user.username
+                )
+            )
+            return HttpResponse(u"上传图片并选取区域", status=500)
+
+        #把图片存储在服务器，然后再做像素处理
+        imgData = base64.b64decode(data)
+        # filename = "tx_100x100_{}.jpg".format(request.user.id)
+        filestyle = ".jpg"
+        filename = "compress_50x50_{}".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        filedir = "art/static/img/"
+        if not os.path.exists(filedir):
+            os.makedirs(filedir)
+        path = filedir + filename + filestyle
+
+        file = open(path, "wb+")
+        file.write(imgData)
+        file.flush()
+        file.close()
+
+        # 修改头像分辨率,压缩后覆盖原图
+        _imgSize = 50
+        im = Image.open(path)
+        out = im.resize((_imgSize, _imgSize), Image.ANTIALIAS)
+        out.save(path)
+
+        mydict = {'filename':filename}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
 
 class PixelToolView(BaseMixin, ListView):
     template_name = 'art/pixel_tool.html'
+    # init_file_name = 5
+    # def get(self, request, *args, **kwargs):
+    #
+    #     #图片转像素，返回像素矩阵
+    #     self.init_file_name = self.kwargs.get('filename', '')
+    #
+    #     return super(PixelToolView, self).get(request, *args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        print "OK"
+        filestyle = ".jpg"
+        filename = self.request.POST.get("filename", "")
+        filedir = "art/static/img/"
+        path = filedir + filename + filestyle
 
+        # 像素矩阵传到前端
+        _imgSize = 50
+        _str2img = Str2Img()
+        _matrix = _str2img.ImgToMatrix(path,_imgSize,_imgSize)
+
+        mydict = {'matrix':_matrix}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
     def get_context_data(self, **kwargs):
+        # kwargs['init_file_name'] = self.init_file_name
         return super(PixelToolView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass
