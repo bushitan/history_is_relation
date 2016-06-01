@@ -119,3 +119,12 @@ class MainView(BaseMixin, ListView):
             json.dumps(mydict),
             content_type="application/json"
         )
+
+
+class PixelToolView(BaseMixin, ListView):
+    template_name = 'art/pixel_tool.html'
+
+    def get_context_data(self, **kwargs):
+        return super(PixelToolView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
