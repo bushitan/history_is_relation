@@ -75,16 +75,18 @@ class Str2Img():
         _matrix = []
         for i in range(HEIGHT):
             for j in range(WIDTH):
-                r,g,b = im.getpixel((j,i))
-                _matrix.append(self.rgb2hex(r,g,b))
+                r,g,b = im.getpixel((j,i)) #获取原始像素
+                r,g,b = self.RGB_Average(r,g,b) #像素扁平化处理
+                _matrix.append(self.rgb2hex(r,g,b))#rgb转16进制，入队
         return _matrix
 
     #css 专用的16进制表达方式
     def rgb2hex(self,r,g,b):
         _h = hex((r << 16) + (g << 8) + b)
         # _h = "#"+_h[2:].upper()
-        _h = "#"+_h[2:]
-        # return _h.decode("utf-8")
+        _h =_h[2:] # 删除Ox
+        _h = "#" + _h.zfill(6) #字符串用0补全6位
+
         return _h
 
     #16 进制转RGB
@@ -97,6 +99,7 @@ class Str2Img():
         return rgb
 
 
+    #像素扁平化
     def RGB_Average(self,r,g,b,alpha=256):
         if alpha == 0:
             return ' '
@@ -167,14 +170,19 @@ if __name__ == '__main__':
     # print _s.hex2rgb(0x9d1844)
 
 
-    print _s.hex2rgb(0x9d181b)
+    # print _s.hex2rgb(0x9d181b)
+    #
+    # print _s.rgb2hex(157,24,27)
 
-    print _s.rgb2hex(157,24,27)
+    def tt (r,g,b):
+        print (r << 16) + (g << 8) + b
+        print (r * 256* 256) + (g * 256) + b
 
+    tt(8,131,24)
 
-
-    n = 16
-    print ( n /16 + 1 ) * 16 -8
+    print hex(557848)
+    # n = 16
+    # print ( n /16 + 1 ) * 16 -8
 #
 #     im = Image.open(IMG)
 #     im = im.resize((WIDTH,HEIGHT), Image.NEAREST)

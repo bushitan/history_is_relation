@@ -168,12 +168,13 @@ class UploadView(BaseMixin, ListView):
 class PixelToolView(BaseMixin, ListView):
     template_name = 'art/pixel_tool.html'
     # init_file_name = 5
-    # def get(self, request, *args, **kwargs):
-    #
-    #     #图片转像素，返回像素矩阵
-    #     self.init_file_name = self.kwargs.get('filename', '')
-    #
-    #     return super(PixelToolView, self).get(request, *args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+
+        #图片转像素，返回像素矩阵
+        self.filename = self.kwargs.get('filename', '')
+
+        return super(PixelToolView, self).get(request, *args, **kwargs)
     def post(self, request, *args, **kwargs):
         print "OK"
         filestyle = ".jpg"
@@ -192,7 +193,7 @@ class PixelToolView(BaseMixin, ListView):
             content_type="application/json"
         )
     def get_context_data(self, **kwargs):
-        # kwargs['init_file_name'] = self.init_file_name
+        kwargs['filename'] = self.filename
         return super(PixelToolView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass
