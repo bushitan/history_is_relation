@@ -72,9 +72,16 @@
 #nav { margin:42px auto 0; text-align:left; }
 
 </style>
+
+<link rel="stylesheet" href="/static/css/farbtastic.css" type="text/css" />
 </head>
 <body >
 <div class="wrap">
+    <span id="picker"></span>
+    <span>
+        <input type="text" id="color_prepare" name="color" value="#123456" />
+        <input type="button" value="选定颜色" id="color_choose" />
+    </span>
  <div class="side">
      <input type="text" id="colorBar"/>
         <input type="button" class="input1" value="隐藏边框" id="done" />
@@ -114,10 +121,14 @@
 <script src="/static/jquery/jquery-2.1.3.min.js"></script>
 <script src="/static/jquery/jquery.cookie.js"></script>
 <script src="/static/js/pixel_tool.js"></script>
+<script src="/static/js/farbtastic.js"></script>
 <script type="text/javascript">
 
 
-
+$(document).ready(function() {
+//    $('#demo').hide();
+    $('#picker').farbtastic('#color_prepare');
+});
 
 //$('#test').click(function(){
 {%if filename%}

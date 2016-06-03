@@ -230,3 +230,5 @@
     GetDom("smaller").onclick = function(){ iconTable.sizeChange(-1); }
     GetDom("ColorInfo").onclick = function(){ iconTable.showHash(); }
     GetDom("SubmitColor").onclick = function(){ iconTable.submitColor(GetDom("HashInfo").value);}
+
+    GetDom("color_choose").onclick = function(){ iconTable.setColor( GetDom("color_prepare").value ); }
