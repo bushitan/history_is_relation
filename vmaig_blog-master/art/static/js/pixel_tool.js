@@ -75,8 +75,8 @@
         nav : GetDom("nav"), //画板表格的容器
         border : "none",
         l : 50, //格子数 l * l
-        wh_default : 12,//格子初始宽高度,
-        wh : 12, //格子宽高度,
+        wh_default : 11,//格子初始宽高度,
+        wh : 11, //格子宽高度,
         MaxWH : 16,
         MinWH : 4,
         ColorHash : null,

@@ -40,7 +40,7 @@
         <div class="col-md-6  ">
             <!--<div id="preview-pane">-->
                 <h4>像素画预览</h4>
-                <input id="ascii" type="text" value="0-. " style="display: none;">
+                <input id="ascii" type="text" value="X/-.  " style="display: none;">
                 <div class="preview-container" style="width: 300px;height:300px;border: 1px">
                     <a>
                         <img id="img-str"  src="" alt="" style="width: 100%;height: auto">
@@ -76,7 +76,7 @@ var x,y,width,height = 0;
 
 $('#tmp-tx').Jcrop({onChange: updatePreview,
                     onSelect: updatePreview,
-//                    aspectRatio:1,
+                    aspectRatio:1,
                     boxWidth:400,
                     boxHeight:300},
                     function(){
@@ -149,7 +149,7 @@ $("#save-tx").click(function(){
             "tx":canvas.toDataURL().split(',')[1],
             "width":parseInt(_width),
             "height":parseInt(_height),
-            "char_size":5,
+            "char_size":15,
             "char_ascii":$("#ascii").val()
         },
         beforeSend:function(xhr){

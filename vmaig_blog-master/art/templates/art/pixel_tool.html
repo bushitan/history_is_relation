@@ -31,17 +31,18 @@
  background-color:#F00;
 }
 #iTable,#tb {
+ background-image: url("/static/img/tx_100x100_1.jpg");
  border-collapse:collapse;
  margin-bottom:40px;
 }
 #iTable { border:1px solid #999; }
 #tb td {
  border:1px solid #000;
- width:8px; height:8px;
+ width:5px; height:5px;
  overflow:hidden;}
 #iTable td {
  /*border:1px solid #999;*/
- width:11px; height:11px;
+ width:8px; height:8px;
  overflow:hidden;
 }
 #box { margin:42px auto 0; text-align:left; }
@@ -61,8 +62,8 @@
 }
 #navTable {  }
 #navTable #tb td {
- width:8px; height:8px;
- overflow:hidden;
+ /*width:8px; height:8px;*/
+ /*overflow:hidden;*/
 }
 #navTable td {
  /*border:1px solid #999;*/
@@ -111,7 +112,7 @@
 </div>
 
 
-<input type="button" value="测试" id="test">
+<input type="button" value="测试-生成图片" id="creation_img">
 <div id="color_main_list" >
 
 </div>
@@ -129,6 +130,28 @@ $(document).ready(function() {
 //    $('#demo').hide();
     $('#picker').farbtastic('#color_prepare');
 });
+$("#creation_img").click(function(){
+    console.log(iconTable.ColorHash);
+
+    $.ajax({
+        type:"POST",
+        url:"/art/creation",
+        data:{
+            "t":1,
+            "matrix":  iconTable.ColorHash
+        },
+        beforeSend:function(xhr){
+            xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+        },
+        success:function(data,textStatus){
+            console.log(data.url)
+        },
+        error:function(XMLHttpRequest, textStatus, errorThrown){
+            alert(XMLHttpRequest.responseText);
+        }
+
+    });
+})
 
 //$('#test').click(function(){
 {%if filename%}

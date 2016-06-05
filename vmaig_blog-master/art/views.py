@@ -106,7 +106,7 @@ class MainView(BaseMixin, ListView):
         # 修改头像分辨率
         im = Image.open(path)
 
-        out = im.resize((100, 100), Image.ANTIALIAS)
+        out = im.resize((64, 64), Image.ANTIALIAS)
         out.save(path)
 
 
@@ -119,6 +119,8 @@ class MainView(BaseMixin, ListView):
             json.dumps(mydict),
             content_type="application/json"
         )
+
+_imgSize = 50
 
 class UploadView(BaseMixin, ListView):
     template_name = 'art/upload.html'
@@ -154,7 +156,7 @@ class UploadView(BaseMixin, ListView):
         file.close()
 
         # 修改头像分辨率,压缩后覆盖原图
-        _imgSize = 50
+        # _imgSize = 50
         im = Image.open(path)
         out = im.resize((_imgSize, _imgSize), Image.ANTIALIAS)
         out.save(path)
@@ -183,7 +185,7 @@ class PixelToolView(BaseMixin, ListView):
         path = filedir + filename + filestyle
 
         # 像素矩阵传到前端
-        _imgSize = 50
+        # _imgSize = 50
         _str2img = Str2Img()
         _matrix = _str2img.ImgToMatrix(path,_imgSize,_imgSize)
 
@@ -195,5 +197,40 @@ class PixelToolView(BaseMixin, ListView):
     def get_context_data(self, **kwargs):
         kwargs['filename'] = self.filename
         return super(PixelToolView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+
+
+class CreationImgView(BaseMixin, ListView):
+
+
+    def post(self, request, *args, **kwargs):
+
+        _matrix = self.request.POST.getlist("matrix[]", "")
+
+        print "OK"
+        print _matrix
+        #；路径
+        filestyle = ".jpg"
+        filename = "creation_50x50_{}".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        filedir = "art/static/img/"
+        if not os.path.exists(filedir):
+            os.makedirs(filedir)
+        path = filedir + filename + filestyle
+        # 像素矩阵传到前端
+
+
+        # _imgSize = 50
+        _str2img = Str2Img()
+        _url = _str2img.MatrixToImg(path,_matrix,_imgSize,_imgSize)
+
+        mydict = {'url':_url}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
+    def get_context_data(self, **kwargs):
+
+        return super(CreationImgView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass

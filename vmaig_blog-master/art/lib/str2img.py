@@ -40,7 +40,7 @@ class Str2Img():
         unit = (256.0 + 1)/length
         return self.ascii_char[int(gray/unit)]
 
-    def process(self,IMG,WIDTH=160,HEIGHT=90,_charSize=5,_charAscii="0-. "):
+    def process(self,IMG,WIDTH=160,HEIGHT=90,_charSize=10,_charAscii="0-. "):
 
         self.ascii_char = list(_charAscii)
         im = Image.open(IMG)
@@ -55,6 +55,18 @@ class Str2Img():
             for j in range(WIDTH):
                 _char = self.get_char(*im.getpixel((j,i)))
                 a.text((j*_charSize,i*_charSize),_char,fill=(0,0,0),font=font)
+
+
+        #画方格
+        _grid = 5
+        _color = (130, 130, 130)
+        for i in range(_grid):
+            a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
+
+        for i in range(_grid):
+            a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
+        # for j in range(WIDTH/5):
+
 
         filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
         # filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
@@ -114,6 +126,26 @@ class Str2Img():
 
         return ( _r,_g,_b )
 
+    def MatrixToImg(self,imgPath,matrix,WIDTH=50,HEIGHT=50,_pixelSize=5):
+
+        _img = Image.new("RGBA",(WIDTH*_pixelSize,HEIGHT*_pixelSize),(255,255,255))
+        _draw  =ImageDraw.Draw(_img)
+
+        _matPos = 0
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                print i*WIDTH+j
+                _hexStr = matrix[i*WIDTH+j]
+                _hexStr = "0x" + _hexStr[1:]
+                _hex = eval(_hexStr)
+                R,G,B = self.hex2rgb(_hex)
+
+                _draw.rectangle ( (j*_pixelSize,i*_pixelSize,j*_pixelSize+_pixelSize,i*_pixelSize+_pixelSize) , fill=(R,G,B) )
+
+        _img.save(imgPath,"png")
+        return True
+
+
     def test_Pixel_Img(self,IMG,WIDTH=100,HEIGHT=80,_charSize=5):
         im = Image.open(IMG)
         im = im.resize((WIDTH,HEIGHT), Image.NEAREST)
@@ -170,17 +202,37 @@ if __name__ == '__main__':
     # print _s.hex2rgb(0x9d1844)
 
 
-    # print _s.hex2rgb(0x9d181b)
+    print _s.hex2rgb(0x9d181b)
+    print _s.hex2rgb(0x9d181b)
+
+    a = '#c828282'
+    #
+    a = "0x" + a[1:]
+    b = eval(a)
+    print a,b
+    print _s.hex2rgb(b)
+
+
+    # a = '0xe8e8e8'
+    # b = eval(a)
+    # print _s.hex2rgb(b)
+    # b= hex(eval('0x154431'))
+
+
+    # print _s.hex2rgb(b)
     #
     # print _s.rgb2hex(157,24,27)
 
-    def tt (r,g,b):
-        print (r << 16) + (g << 8) + b
-        print (r * 256* 256) + (g * 256) + b
+    # def tt (r,g,b):
+    #     print (r << 16) + (g << 8) + b
+    #     print (r * 256* 256) + (g * 256) + b
+    #
+    # tt(8,131,24)
 
-    tt(8,131,24)
 
-    print hex(557848)
+    # print hex("OxE8E8E8")
+
+    # print 70/50
     # n = 16
     # print ( n /16 + 1 ) * 16 -8
 #

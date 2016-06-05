@@ -9,4 +9,7 @@ urlpatterns = [
    url(r'^art/pixel_tool/(?P<filename>\w+)$', PixelToolView.as_view()),
    url(r'^art/upload$', UploadView.as_view()),
 
+   url(r'^art/creation$', CreationImgView.as_view()),
+
+
 ]
