@@ -135,12 +135,12 @@ $("#save-tx").click(function(){
     fd.append('file',blob);
 
     //以100位基准，按照宽高比传入
-    _width = 128;
-    _height = 128;
-//    if (width>height)
-//        _height = 128*height/width;
-//    else
-//        _width = 128*width/height;
+    _width = 100;
+    _height = 100;
+    if (width>height)
+        _height = 100*height/width;
+    else
+        _width = 100*width/height;
 
     $.ajax({
         url:"/art/main",

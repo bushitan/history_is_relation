@@ -74,14 +74,14 @@
         box : GetDom("box"), //画板表格的容器
         nav : GetDom("nav"), //画板表格的容器
         border : "none",
-        l : 50, //格子数 l * l
+        l : 128, //格子数 l * l
         wh_default : 11,//格子初始宽高度,
         wh : 11, //格子宽高度,
         MaxWH : 16,
         MinWH : 4,
         ColorHash : null,
         init : function(l){ //利用数组拼接表格字符
-            this.l = l || 50;
+            this.l = l || 128;
             var l = this.l;
             var aT = ["<table id='iTable'>"];
             var td_id = 0;
