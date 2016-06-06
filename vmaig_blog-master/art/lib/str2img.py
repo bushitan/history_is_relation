@@ -40,7 +40,7 @@ class Str2Img():
         unit = (256.0 + 1)/length
         return self.ascii_char[int(gray/unit)]
 
-    def process(self,IMG,WIDTH=160,HEIGHT=90,_charSize=10,_charAscii="0-. "):
+    def process(self,IMG,WIDTH=160,HEIGHT=90,_charSize=10,_charAscii="0-. ",grid_num = 5):
 
         self.ascii_char = list(_charAscii)
         im = Image.open(IMG)
@@ -58,14 +58,14 @@ class Str2Img():
 
 
         #画方格
-        _grid = 5
-        _color = (130, 130, 130)
-        for i in range(_grid):
-            a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
+        _grid = grid_num
+        if _grid != 0:
+            _color = (130, 130, 130)
+            for i in range(_grid):
+                a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
 
-        for i in range(_grid):
-            a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
-        # for j in range(WIDTH/5):
+            for i in range(_grid):
+                a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
 
 
         filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
@@ -77,7 +77,7 @@ class Str2Img():
         url = filedir + filename
         # strImg.save(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\img2.png")
         # strImg.save(r"art/static/img/img3.png")
-        print url
+        # print url
         strImg.save(url)
         return r"/static/img/"+filename
 

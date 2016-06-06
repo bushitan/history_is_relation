@@ -12,4 +12,5 @@ urlpatterns = [
    url(r'^art/creation$', CreationImgView.as_view()),
 
 
+   url(r'^art/img_str$', ImgToStrView.as_view()),
 ]

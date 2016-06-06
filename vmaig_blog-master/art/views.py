@@ -239,58 +239,60 @@ class CreationImgView(BaseMixin, ListView):
 
 
 
-# class ClearColorView(BaseMixin, ListView):
-#     template_name = 'art/clear_color.html'
-#
-#     def get_context_data(self, **kwargs):
-#         return super(ClearColorView, self).get_context_data(**kwargs)
-#     def get_queryset(self):
-#         pass
-#
-#     def post(self, request, *args, **kwargs):
-#         data = request.POST['tx']
-#
-#         print data , 'OK1'
-#         if not data:
-#             logger.error(
-#                 u'[UserControl]用户上传头像为空:[%s]'.format(
-#                     request.user.username
-#                 )
-#             )
-#             return HttpResponse(u"上传图片并选取区域", status=500)
-#
-#         _width = int(self.request.POST.get("width", ""))
-#         _height = int(self.request.POST.get("height", ""))
-#         _charSize = int(self.request.POST.get("char_size", ""))
-#         _charAscii = self.request.POST.get("char_ascii", "")
-#
-#         imgData = base64.b64decode(data)
-#
-#         filename = "tx_100x100_{}.jpg".format(request.user.id)
-#         filedir = "art/static/img/"
-#         if not os.path.exists(filedir):
-#             os.makedirs(filedir)
-#
-#         path = filedir + filename
-#
-#         file = open(path, "wb+")
-#         file.write(imgData)
-#         file.flush()
-#         file.close()
-#
-#         # 修改头像分辨率
-#         im = Image.open(path)
-#
-#         out = im.resize((64, 64), Image.ANTIALIAS)
-#         out.save(path)
-#
-#
-#         #Img To StrImg
-#         #return url
-#         _str2img = Str2Img()
-#         _url = _str2img.process(path,_width,_height,_charSize,_charAscii)
-#         mydict = {'url':_url}
-#         return HttpResponse(
-#             json.dumps(mydict),
-#             content_type="application/json"
-#         )
+class ImgToStrView(BaseMixin, ListView):
+    template_name = 'img_str/pc.html'
+
+    def get_context_data(self, **kwargs):
+        return super(ImgToStrView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+
+    def post(self, request, *args, **kwargs):
+
+        data = request.POST['tx']
+        # print data , 'OK1'
+        if not data:
+            logger.error(
+                u'[UserControl]用户上传头像为空:[%s]'.format(
+                    request.user.username
+                )
+            )
+            return HttpResponse(u"上传图片并选取区域", status=500)
+
+        _width = int(self.request.POST.get("width", ""))
+        _height = int(self.request.POST.get("height", ""))
+        _charSize = int(self.request.POST.get("char_size", ""))
+        _charAscii = self.request.POST.get("char_ascii", "")
+        _grid_num = int(self.request.POST.get("grid_num", ""))
+
+        print _grid_num
+        imgData = base64.b64decode(data)
+
+        filename = "tx_100x100_{}.jpg".format(request.user.id)
+        filedir = "art/static/img/"
+        if not os.path.exists(filedir):
+            os.makedirs(filedir)
+
+        path = filedir + filename
+
+        file = open(path, "wb+")
+        file.write(imgData)
+        file.flush()
+        file.close()
+
+        # 修改头像分辨率
+        im = Image.open(path)
+
+        out = im.resize((_width, _height), Image.ANTIALIAS)
+        out.save(path)
+
+
+        #Img To StrImg
+        #return url
+        _str2img = Str2Img()
+        _url = _str2img.process(path,_width,_height,_charSize,_charAscii,_grid_num)
+        mydict = {'url':_url}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
