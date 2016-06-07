@@ -72,7 +72,7 @@ class Str2Img():
         # filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
         homedir = os.getcwd()
         # parent_path = os.path.dirname(homedir)
-        filedir = homedir+"/art/static/img/"
+        filedir = homedir+"/static/img/"
 
         # print "homedir:" + homedir
         # print "filedir:" + filedir
