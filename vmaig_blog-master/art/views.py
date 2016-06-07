@@ -272,7 +272,7 @@ class ImgToStrView(BaseMixin, ListView):
 
         homedir = os.getcwd()
         # parent_path = os.path.dirname(homedir)
-        filedir = homedir+"/art/static/img/"
+        filedir = homedir+"/static/img/"
         # filedir = "art/static/img/"
         if not os.path.exists(filedir):
             os.makedirs(filedir)
