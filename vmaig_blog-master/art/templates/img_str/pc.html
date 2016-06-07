@@ -20,6 +20,16 @@
 </head>
 <body>
 
+
+
+<!--<button class="btn btn-primary btn-lg" data-toggle="modal"-->
+   <!--data-target="#myModal">-->
+   <!--开始演示模态框-->
+<!--</button>-->
+
+
+
+
  <div id="vmaig-main">
         <div id="vmaig-content" class="container">
            <div id="change-tx" class="well clearfix">
@@ -101,6 +111,19 @@
 
 
 </div>
+
+     <!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" data-backdrop="true" aria-hidden="true">
+    <div class="modal-dialog">
+          <div class="modal-content">
+            <a style="top:100px">
+              <img src="/static/icon/loading.gif" style="width:100%;height: auto;">
+            </a>
+          </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 </body>
 <script language="javascript" type="text/javascript">
 
@@ -176,6 +199,7 @@ $("#save-tx").click(function(){
 //    else
 //        _width = 128*width/height;
 
+
     $.ajax({
         url:"/art/img_str",
         type:"POST",
@@ -188,6 +212,7 @@ $("#save-tx").click(function(){
             "grid_num":$("#grid_num").val()
         },
         beforeSend:function(xhr){
+            $("#myModal").modal('show');
             xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
         },
         success:function(data,textStatus){
@@ -203,12 +228,28 @@ $("#save-tx").click(function(){
         },
         error:function(XMLHttpRequest, textStatus, errorThrown){
             alert(XMLHttpRequest.responseText);
+        },
+        complete:function(XMLHttpRequest, textStatus, errorThrown){
+            $("#myModal").modal('hide');
+
+
+
+//            console.log("1:"+ $("body").scrollTop())
+//            $("body").scrollTop(10000)
+//            console.log("2:"+  $("body").scrollTop())
         }
+
 
     });
 
 });
 
+$('#myModal').on('hidden.bs.modal', function () {
+   console.log(document.body.scrollTop )
+   document.body.scrollTop = 200
+
+   console.log(document.body.scrollTop )
+})
 
 function preImage(url,callback){
     var img = new Image(); //创建一个Image对象，实现图片的预下载
