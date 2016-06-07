@@ -14,6 +14,7 @@ import logging
 import os
 import base64
 from PIL import Image
+import sys
 # logger
 logger = logging.getLogger(__name__)
 
@@ -270,9 +271,9 @@ class ImgToStrView(BaseMixin, ListView):
 
         filename = "tx_100x100_{}.jpg".format(request.user.id)
 
-        homedir = os.getcwd()
+        # homedir = os.path.dirname(os.path.dirname(sys.path[0]))
         # parent_path = os.path.dirname(homedir)
-        filedir = homedir+"/static/img/"
+        filedir = sys.path[0]+"/blog/static/img/art/"
         # filedir = "art/static/img/"
         if not os.path.exists(filedir):
             os.makedirs(filedir)

@@ -1,5 +1,6 @@
 #--coding:utf-8--
 from PIL import Image,ImageDraw,ImageFont
+import sys
 # import argparse
 #
 # #命令行输入参数处理
@@ -70,9 +71,11 @@ class Str2Img():
 
         filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
         # filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
-        homedir = os.getcwd()
+        # homedir = os.path.dirname(os.path.dirname(sys.path[0]))
+        # print "homedir:",homedir
+        # print "sys.path[0]:",sys.path[0]
         # parent_path = os.path.dirname(homedir)
-        filedir = homedir+"/static/img/"
+        filedir = sys.path[0]+"/blog/static/img/art/"
 
         # print "homedir:" + homedir
         # print "filedir:" + filedir
@@ -85,7 +88,7 @@ class Str2Img():
         # print url
         strImg.save(url)
         # print "url:" + url
-        return r"/static/img/"+filename
+        return r"/static/img/art/"+filename
 
     #图片转化像素数组
     def ImgToMatrix(self,imgPath,WIDTH=50,HEIGHT=50):
@@ -200,7 +203,8 @@ class Str2Img():
 
 if __name__ == '__main__':
     _s = Str2Img()
-    _s.process("tx_100x100_None.jpg")
+
+    # _s.process("tx_100x100_None.jpg")
     # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")
     # _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
     # _s.test_Pixel_Img(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
@@ -209,6 +213,8 @@ if __name__ == '__main__':
     # print _s.hex2rgb(0x9d1844)
     homedir = os.getcwd()
     parent_path = os.path.dirname(homedir)
+    print os.path.dirname(os.path.dirname(sys.path[0]))
+
     print homedir
     print parent_path
 
