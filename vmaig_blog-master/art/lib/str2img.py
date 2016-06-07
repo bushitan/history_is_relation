@@ -48,13 +48,13 @@ class Str2Img():
 
 
         strImg = Image.new("RGBA",(WIDTH*_charSize,HEIGHT*_charSize),(255,255,255))
-        font = ImageFont.truetype ('simsun.ttc', _charSize)
+        # font = ImageFont.truetype ('simsun.ttc', _charSize)
         a=ImageDraw.Draw(strImg)
 
         for i in range(HEIGHT):
             for j in range(WIDTH):
                 _char = self.get_char(*im.getpixel((j,i)))
-                a.text((j*_charSize,i*_charSize),_char,fill=(0,0,0),font=font)
+                a.text((j*_charSize,i*_charSize),_char,fill=(0,0,0))
 
 
         #画方格
@@ -70,7 +70,12 @@ class Str2Img():
 
         filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
         # filedir = r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img"
-        filedir = "art/static/img/"
+        homedir = os.getcwd()
+        # parent_path = os.path.dirname(homedir)
+        filedir = homedir+"/art/static/img/"
+
+        # print "homedir:" + homedir
+        # print "filedir:" + filedir
         if not os.path.exists(filedir):
             os.makedirs(filedir)
 
@@ -79,6 +84,7 @@ class Str2Img():
         # strImg.save(r"art/static/img/img3.png")
         # print url
         strImg.save(url)
+        # print "url:" + url
         return r"/static/img/"+filename
 
     #图片转化像素数组
@@ -194,13 +200,17 @@ class Str2Img():
 
 if __name__ == '__main__':
     _s = Str2Img()
+    _s.process("tx_100x100_None.jpg")
     # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")
     # _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
     # _s.test_Pixel_Img(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
     # _s.process(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\7.jpg",100,80)
     # print _s.rgb2hex(157,24,68)
     # print _s.hex2rgb(0x9d1844)
-
+    homedir = os.getcwd()
+    parent_path = os.path.dirname(homedir)
+    print homedir
+    print parent_path
 
     print _s.hex2rgb(0x9d181b)
     print _s.hex2rgb(0x9d181b)

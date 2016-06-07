@@ -269,7 +269,11 @@ class ImgToStrView(BaseMixin, ListView):
         imgData = base64.b64decode(data)
 
         filename = "tx_100x100_{}.jpg".format(request.user.id)
-        filedir = "art/static/img/"
+
+        homedir = os.getcwd()
+        # parent_path = os.path.dirname(homedir)
+        filedir = homedir+"/art/static/img/"
+        # filedir = "art/static/img/"
         if not os.path.exists(filedir):
             os.makedirs(filedir)
 
