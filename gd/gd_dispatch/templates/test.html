@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="/static/jquery/jquery-2.1.3.min.js"></script>
+    <script src="/static/jquery/jquery.cookie.js"></script>
+    <script src="/static/jquery/jquery.form.js"></script>
+    <script src="/static/jquery/jquery.Jcrop.min.js"></script>
+</head>
+<body>
+<button id="monitor_get" >获取监控数据</button>
+<button id="monitor_set" >修改摄像头ip</button>
+<>
+</body>
+
+<script>
+    $("#monitor_get").click(function () {
+         $.ajax({
+            type:"POST",
+            url:"/api/monitor/get_ip",
+            data:{
+			    "stb_sn":"44290068159"
+			},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+            },
+            success:function(data,textStatus){
+				console.log(data);
+
+{#                $("#monitor").val(data);#}
+{#				window.location.href = data.url;#}
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+{#                alert(XMLHttpRequest.responseText);#}
+
+            }
+        });
+    })
+
+
+    $("#monitor_set").click(function () {
+         $.ajax({
+            type:"POST",
+            url:"/api/monitor/set_ip",
+            data:{
+                "camera_sn":"1112",
+			    "ip":"192.168.200.4"
+			},
+            beforeSend:function(xhr){
+                xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+            },
+            success:function(data,textStatus){
+				console.log(data);
+
+{#                $("#monitor").val(data);#}
+{#				window.location.href = data.url;#}
+            },
+            error:function(XMLHttpRequest, textStatus, errorThrown){
+{#                alert(XMLHttpRequest.responseText);#}
+
+            }
+        });
+    })
+</script>
+</html>

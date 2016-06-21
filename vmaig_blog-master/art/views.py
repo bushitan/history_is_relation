@@ -291,7 +291,6 @@ class ImgToStrView(BaseMixin, ListView):
         out = im.resize((_width, _height), Image.ANTIALIAS)
         out.save(path)
 
-
         #Img To StrImg
         #return url
         _str2img = Str2Img()
