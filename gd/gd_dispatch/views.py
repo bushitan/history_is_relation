@@ -82,6 +82,7 @@ class MonitorGetIP(BaseMixin, ListView):
                     "ip":_m.camera.ip})
 
             _dict = {
+                'result':"true",
                 'style':u"监控",
                 'user':_stb.name,
                 'cameras': _cameraList
@@ -91,8 +92,15 @@ class MonitorGetIP(BaseMixin, ListView):
                 json.dumps(_dict),
                 content_type="application/json"
             )
+        else:
+            _dict = {
+                'result':"false"
+            }
 
-        return HttpResponse(u"机顶盒序列号不存在！")
+        return HttpResponse(
+            json.dumps(_dict),
+            content_type="application/json"
+        )
 
     def get_context_data(self, **kwargs):
         return super(MonitorGetIP, self).get_context_data(**kwargs)
@@ -103,17 +111,28 @@ class MonitorGetIP(BaseMixin, ListView):
 class MonitorSetIP(BaseMixin, ListView):
     # template_name = 'time/test1.html'
     def post(self, request, *args, **kwargs):
-        _camera_sn = self.request.POST.get("camera_sn", "")
+        # _camera_sn = self.request.POST.get("camera_sn", "")
         _ip = self.request.POST.get("ip", "")
-        if Camera.objects.filter(sn=_camera_sn).exists():
+        _uuid = self.request.POST.get("uuid", "")
+        _t = self.request.POST.get("t", "")
 
-            _camera = Camera.objects.get(sn=_camera_sn)
+        if Camera.objects.filter(uuid=_uuid).exists():
+
+            _camera = Camera.objects.get(uuid=_uuid)
             _camera.ip = _ip
+            _camera.unix_timestamp = _t
              # print "21"
             _camera.save()
-            _word = u"摄像头IP修改成功:"+ _ip
-            return HttpResponse(_word)
-        return HttpResponse(u"摄像头序列号不存在")
+
+            return HttpResponse('ok')
+        else:
+            _dict = {
+                'result':"false"
+            }
+            return HttpResponse(
+                json.dumps(_dict),
+                content_type="application/json"
+            )
     def get_context_data(self, **kwargs):
         return super(MonitorSetIP, self).get_context_data(**kwargs)
 

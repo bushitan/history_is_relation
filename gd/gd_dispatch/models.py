@@ -34,7 +34,10 @@ class STB(models.Model):
 class Camera(models.Model):
     name = models.CharField(max_length=40, verbose_name=u'户主名称')
     sn = models.CharField(max_length=40, verbose_name=u'序列号')
+    uuid = models.CharField(max_length=128, verbose_name=u'uuid',null=True)
     ip = models.GenericIPAddressField(verbose_name=u'IP地址')
+    unix_timestamp = models.DateTimeField(u'时间戳',null=True)
+
     class Meta:
         verbose_name_plural = verbose_name = u"信息_摄像头"
         # app_label = string_with_title('gd_dispatch', u"广电调度平台")

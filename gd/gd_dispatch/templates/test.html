@@ -44,8 +44,9 @@
             type:"POST",
             url:"/api/monitor/set_ip",
             data:{
-                "camera_sn":"1112",
-			    "ip":"192.168.200.4"
+                "uuid":"12345b",
+			    "ip":"192.168.200.4",
+                "t":"2016-06-22 02:57:57"
 			},
             beforeSend:function(xhr){
                 xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
