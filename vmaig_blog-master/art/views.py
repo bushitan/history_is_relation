@@ -13,7 +13,7 @@ import json
 import logging
 import os
 import base64
-from PIL import Image
+from PIL import Image,ImageDraw,ImageFont
 import sys
 # logger
 logger = logging.getLogger(__name__)
@@ -260,6 +260,7 @@ class ImgToStrView(BaseMixin, ListView):
             )
             return HttpResponse(u"上传图片并选取区域", status=500)
 
+        _img_type = self.request.POST.get("img_type", "")
         _width = int(self.request.POST.get("width", ""))
         _height = int(self.request.POST.get("height", ""))
         _charSize = int(self.request.POST.get("char_size", ""))
@@ -285,18 +286,48 @@ class ImgToStrView(BaseMixin, ListView):
         file.flush()
         file.close()
 
-        # 修改头像分辨率
-        im = Image.open(path)
+        print _img_type
+        #原画 + 方格
+        if _img_type == 'normal':
 
-        out = im.resize((_width, _height), Image.ANTIALIAS)
-        out.save(path)
+            WIDTH = 1024
+            HEIGHT = 1024
+            _grid = _grid_num
 
-        #Img To StrImg
-        #return url
-        _str2img = Str2Img()
-        _url = _str2img.process(path,_width,_height,_charSize,_charAscii,_grid_num)
-        mydict = {'url':_url}
-        return HttpResponse(
-            json.dumps(mydict),
-            content_type="application/json"
-        )
+            im = Image.open(path)
+            out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
+            a = ImageDraw.Draw(out)
+
+            if _grid != 0:
+                _color = (130, 130, 130)
+                for i in range(_grid):
+                    a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
+
+                for i in range(_grid):
+                    a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
+
+            out.save(path)
+
+            _url =   r"/static/img/art/"+filename
+            mydict = {'url':_url}
+            return HttpResponse(
+                json.dumps(mydict),
+                content_type="application/json"
+            )
+        #字符画 + 方格
+        else:
+            # 修改头像分辨率
+            # im = Image.open(path)
+            #
+            # out = im.resize((_width, _height), Image.ANTIALIAS)
+            # out.save(path)
+
+            #Img To StrImg
+            #return url
+            _str2img = Str2Img()
+            _url = _str2img.process(path,_width,_height,_charSize,_charAscii,_grid_num)
+            mydict = {'url':_url}
+            return HttpResponse(
+                json.dumps(mydict),
+                content_type="application/json"
+            )

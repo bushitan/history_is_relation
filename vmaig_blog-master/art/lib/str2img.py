@@ -44,6 +44,8 @@ class Str2Img():
     def process(self,IMG,WIDTH=160,HEIGHT=90,_charSize=10,_charAscii="0-. ",grid_num = 5):
 
         self.ascii_char = list(_charAscii)
+
+        # 修改头像分辨率
         im = Image.open(IMG)
         im = im.resize((WIDTH,HEIGHT), Image.NEAREST)
 

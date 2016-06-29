@@ -50,8 +50,16 @@
                     </div>
                 </div>
                 <div class="col-md-9 l-center">
-                    <div><b>使用字符:</b> <input id="ascii" type="text" value="X/-.  " style=""></div>
-                    <div>(包含空格)</div>
+                    <div>
+                        <b>字符画</b> <input  name="img_type" type="radio" value="char" checked="checked" style="">
+                        <b>原画</b> <input name="img_type" type="radio" value="normal" style="">
+                    </div>
+                    </br>
+                    <div>
+                        <b>使用字符:</b> <input id="ascii" type="text" value="X/-.  " style="">
+                        <div>(包含空格)</div>
+                    </div>
+
                     </br>
                     <div> <b>字符大小:</b> <input id="char_size" type="text" value="15" style=""></div>
                     </br>
@@ -190,13 +198,12 @@ $("#save-tx").click(function(){
 
     fd.append('file',blob);
 
-    //以100位基准，按照宽高比传入
+    //字符画设置判断
+    console.log($('input:radio[name="img_type"]:checked').val())
+
+         //以100位基准，按照宽高比传入
     _width = 128;
     _height = 128;
-//    if (width>height)
-//        _height = 128*height/width;
-//    else
-//        _width = 128*width/height;
 
 
     $.ajax({
@@ -204,6 +211,7 @@ $("#save-tx").click(function(){
         type:"POST",
         data:{
             "tx":canvas.toDataURL().split(',')[1],
+            "img_type":$('input:radio[name="img_type"]:checked').val(),
             "width":parseInt(_width),
             "height":parseInt(_height),
             "char_size":$("#char_size").val(),
@@ -230,9 +238,6 @@ $("#save-tx").click(function(){
         },
         complete:function(XMLHttpRequest, textStatus, errorThrown){
             $("#myModal").modal('hide');
-
-
-
 //            console.log("1:"+ $("body").scrollTop())
 //            $("body").scrollTop(10000)
 //            console.log("2:"+  $("body").scrollTop())
@@ -241,7 +246,11 @@ $("#save-tx").click(function(){
 
     });
 
+
 });
+
+
+
 
 $('#myModal').on('hidden.bs.modal', function () {
    console.log(document.body.scrollTop )
