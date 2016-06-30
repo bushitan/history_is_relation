@@ -290,22 +290,32 @@ class ImgToStrView(BaseMixin, ListView):
         #原画 + 方格
         if _img_type == 'normal':
 
-            WIDTH = 1024
-            HEIGHT = 1024
-            _grid = _grid_num
-
             im = Image.open(path)
-            out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
+            print "format:",im.format, "size:",im.size, "mode:",im.mode
+
+            WIDTH = im.size[0]
+            HEIGHT = im.size[1]
+            _grid = _grid_num
+            _charSize = 1
+
+
+
+
+            # out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
             a = ImageDraw.Draw(out)
 
-            if _grid != 0:
-                _color = (130, 130, 130)
+            _color = (130, 130, 130)
+
+            if _grid > 0:
+                print _grid
                 for i in range(_grid):
                     a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
-
+                    print 0,i*HEIGHT*_charSize/_grid , WIDTH*_charSize,i*HEIGHT*_charSize/_grid
                 for i in range(_grid):
                     a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
 
+            filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+            path = filedir + filename
             out.save(path)
 
             _url =   r"/static/img/art/"+filename
