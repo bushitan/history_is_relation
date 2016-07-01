@@ -203,9 +203,42 @@ class Str2Img():
         # url = filedir + filename
         # im.save(url,"png")
 
+
+    def Process_Adapt(self,width = 1080,height = 1970,_grid_numX = 4):
+
+        _grid_offsetX = width % _grid_numX / 2
+        _grid_length = (width - _grid_offsetX * 2) / _grid_numX
+
+        _grid_numY = height / _grid_length  #Y的格子数
+
+
+        _grid_offsetY = height % _grid_length / 2
+
+        print height,_grid_numY,_grid_offsetY
+        print height / _grid_numY
+        # if height < _grid_length :
+        #     return False
+
+        # line_startRow = [(_grid_offsetX,_grid_offsetY),(_grid_offsetX + _grid_length * _grid_numX , _grid_offsetY)]
+        # line_r1 = [(_grid_offsetX , _grid_offsetY + _grid_length * 1),(_grid_offsetX + _grid_length * _grid_numX , _grid_offsetY + _grid_length * 1)]
+        #
+        # line_startCol = [(_grid_offsetX,_grid_offsetY),(_grid_offsetX , _grid_offsetY + _grid_length * _grid_numY)]
+        # line_c1 = [(_grid_offsetX + _grid_length * 1,_grid_offsetY),(_grid_offsetX + _grid_length * 1 , _grid_offsetY + _grid_length * _grid_numY)]
+
+        _lines = []
+        #横线
+        for i in range(_grid_numY+1):
+            _lines.append( (_grid_offsetX,_grid_offsetY + _grid_length*i,_grid_offsetX + _grid_length * _grid_numX , _grid_offsetY + _grid_length*i) )
+        #竖线
+        for i in range(_grid_numX+1):
+            _lines.append( (_grid_offsetX + _grid_length * i,_grid_offsetY,_grid_offsetX + _grid_length * i , _grid_offsetY + _grid_length * _grid_numY) )
+        # print _lines
+
+        return _lines
+
 if __name__ == '__main__':
     _s = Str2Img()
-
+    _s.Process_Adapt()
     # _s.process("tx_100x100_None.jpg")
     # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")
     # _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
@@ -213,22 +246,22 @@ if __name__ == '__main__':
     # _s.process(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\7.jpg",100,80)
     # print _s.rgb2hex(157,24,68)
     # print _s.hex2rgb(0x9d1844)
-    homedir = os.getcwd()
-    parent_path = os.path.dirname(homedir)
-    print os.path.dirname(os.path.dirname(sys.path[0]))
-
-    print homedir
-    print parent_path
-
-    print _s.hex2rgb(0x9d181b)
-    print _s.hex2rgb(0x9d181b)
-
-    a = '#c828282'
+    # homedir = os.getcwd()
+    # parent_path = os.path.dirname(homedir)
+    # print os.path.dirname(os.path.dirname(sys.path[0]))
     #
-    a = "0x" + a[1:]
-    b = eval(a)
-    print a,b
-    print _s.hex2rgb(b)
+    # print homedir
+    # print parent_path
+    #
+    # print _s.hex2rgb(0x9d181b)
+    # print _s.hex2rgb(0x9d181b)
+    #
+    # a = '#c828282'
+    # #
+    # a = "0x" + a[1:]
+    # b = eval(a)
+    # print a,b
+    # print _s.hex2rgb(b)
 
 
     # a = '0xe8e8e8'

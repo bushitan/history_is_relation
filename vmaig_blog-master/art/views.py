@@ -298,25 +298,30 @@ class ImgToStrView(BaseMixin, ListView):
             _grid = _grid_num
             _charSize = 1
 
-
-
-
             # out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
-            a = ImageDraw.Draw(out)
+            a = ImageDraw.Draw(im)
 
             _color = (130, 130, 130)
 
             if _grid > 0:
-                print _grid
-                for i in range(_grid):
-                    a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
-                    print 0,i*HEIGHT*_charSize/_grid , WIDTH*_charSize,i*HEIGHT*_charSize/_grid
-                for i in range(_grid):
-                    a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
+                # print _grid
+
+                _str2img = Str2Img()
+                _lines = _str2img.Process_Adapt(WIDTH,HEIGHT,_grid)
+
+                for i in range(len(_lines)):
+                    # a.line(
+                    a.line([(_lines[i][0],_lines[i][1]),(_lines[i][2],_lines[i][3])],fill=_color,width=1)
+
+                # for i in range(_grid):
+                #     a.line([(0,i*HEIGHT*_charSize/_grid),(WIDTH*_charSize,i*HEIGHT*_charSize/_grid)],fill=_color,width=1)
+                #     print 0,i*HEIGHT*_charSize/_grid , WIDTH*_charSize,i*HEIGHT*_charSize/_grid
+                # for i in range(_grid):
+                #     a.line([(i*WIDTH*_charSize/_grid,0),(i*WIDTH*_charSize/_grid,HEIGHT*_charSize)],fill=_color,width=1)
 
             filename = "tx_100x100_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
             path = filedir + filename
-            out.save(path)
+            im.save(path)
 
             _url =   r"/static/img/art/"+filename
             mydict = {'url':_url}
