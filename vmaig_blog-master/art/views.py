@@ -1,4 +1,5 @@
 #coding:utf-8
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404
 from art.models import *
 from vmaig_comments.models import Comment
@@ -7,6 +8,7 @@ from vmaig_auth.forms import VmaigUserCreationForm, VmaigPasswordRestForm
 from vmaig_blog.settings import PAGE_NUM
 from django.views.generic import View, TemplateView, ListView, DetailView
 from art.lib.str2img import Str2Img
+from art.lib.web import Web
 import datetime
 import time
 import json
@@ -239,6 +241,35 @@ class CreationImgView(BaseMixin, ListView):
 
 
 
+#微信接口使用，图片转字符画
+
+class WXImgToStr(BaseMixin, ListView):
+    # template_name = 'img_str/pc.html'
+
+    def get_context_data(self, **kwargs):
+        return super(WXImgToStr, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+
+    def post(self, request, *args, **kwargs):
+        _img_url = self.request.POST.get("img_url", "")
+
+        filedir = sys.path[0]+"/blog/static/img/art/"
+        filename = "img_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        img_url = "http://mmbiz.qpic.cn/mmbiz/EmT9585IibD0V5dic327aVTjBFr1PgAcdzb7SDPK0Ndo3qqm26wHn6s4Qpf5TddjtpNFRrmL8CBb8Q64XuN13v4Q/0"
+
+        _web =  Web()
+        _url = r"/static/img/art/"
+
+        if _web.Download_Img(filedir,filename,img_url ): #保存图片
+            _str2img = Str2Img()
+            _url += _str2img.Process_ByUrl(filedir,filename) # 图片转字符画
+
+        mydict = {'url':_url}
+        return HttpResponse(
+            json.dumps(mydict),
+            content_type="application/json"
+        )
 
 class ImgToStrView(BaseMixin, ListView):
     template_name = 'img_str/pc.html'

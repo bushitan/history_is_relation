@@ -13,4 +13,7 @@ urlpatterns = [
 
 
    url(r'^art/img_str$', ImgToStrView.as_view()),
+   url(r'^art/wx_img_str$', WXImgToStr.as_view()),
+
+
 ]

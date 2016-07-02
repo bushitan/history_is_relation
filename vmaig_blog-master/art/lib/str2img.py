@@ -29,6 +29,9 @@ import sys
 # ascii_char = list(u"0-. ")
 import  os
 import  time
+
+
+
 class Str2Img():
     ascii_char = list(u"0-. ")
     # 将256灰度映射到70个字符上
@@ -219,12 +222,6 @@ class Str2Img():
         # if height < _grid_length :
         #     return False
 
-        # line_startRow = [(_grid_offsetX,_grid_offsetY),(_grid_offsetX + _grid_length * _grid_numX , _grid_offsetY)]
-        # line_r1 = [(_grid_offsetX , _grid_offsetY + _grid_length * 1),(_grid_offsetX + _grid_length * _grid_numX , _grid_offsetY + _grid_length * 1)]
-        #
-        # line_startCol = [(_grid_offsetX,_grid_offsetY),(_grid_offsetX , _grid_offsetY + _grid_length * _grid_numY)]
-        # line_c1 = [(_grid_offsetX + _grid_length * 1,_grid_offsetY),(_grid_offsetX + _grid_length * 1 , _grid_offsetY + _grid_length * _grid_numY)]
-
         _lines = []
         #横线
         for i in range(_grid_numY+1):
@@ -236,9 +233,40 @@ class Str2Img():
 
         return _lines
 
+    def Process_ByUrl(self,filedir , filename,_grid_numX = 4):
+
+        im = Image.open(filedir+filename)
+        # print "format:",im.format, "size:",im.size, "mode:",im.mode
+
+        WIDTH = im.size[0]
+        HEIGHT = im.size[1]
+        _grid = _grid_numX
+        _charSize = 1
+
+        # out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
+        a = ImageDraw.Draw(im)
+
+        _color = (130, 130, 130)
+
+        if _grid > 0:
+            # print _grid
+
+            _lines = self.Process_Adapt(WIDTH,HEIGHT,_grid)
+
+            for i in range(len(_lines)):
+                # a.line(
+                a.line([(_lines[i][0],_lines[i][1]),(_lines[i][2],_lines[i][3])],fill=_color,width=1)
+
+        _strFilename = "str_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        path = filedir + _strFilename
+        im.save(path)
+        return _strFilename
+
+        # _url =   r"/static/img/art/"+filename
+
 if __name__ == '__main__':
     _s = Str2Img()
-    _s.Process_Adapt()
+    # _s.Process_Adapt()
     # _s.process("tx_100x100_None.jpg")
     # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")
     # _s.test_Pixel_Img(r"E:\Carcer World\code\Python\git\history_is_relation\vmaig_blog-master\art\static\img\compress_100x100_20160601233304.jpg" , 50,50)
