@@ -252,16 +252,17 @@ class WXImgToStr(BaseMixin, ListView):
         pass
 
     def post(self, request, *args, **kwargs):
+
         _img_url = self.request.POST.get("img_url", "")
 
         filedir = sys.path[0]+"/blog/static/img/art/"
         filename = "img_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
-        img_url = "http://mmbiz.qpic.cn/mmbiz/EmT9585IibD0V5dic327aVTjBFr1PgAcdzb7SDPK0Ndo3qqm26wHn6s4Qpf5TddjtpNFRrmL8CBb8Q64XuN13v4Q/0"
+        # img_url = "http://mmbiz.qpic.cn/mmbiz/EmT9585IibD0V5dic327aVTjBFr1PgAcdzb7SDPK0Ndo3qqm26wHn6s4Qpf5TddjtpNFRrmL8CBb8Q64XuN13v4Q/0"
 
         _web =  Web()
         _url = r"/static/img/art/"
 
-        if _web.Download_Img(filedir,filename,img_url ): #保存图片
+        if _web.Download_Img(filedir,filename,_img_url ): #保存图片
             _str2img = Str2Img()
             _url += _str2img.Process_ByUrl(filedir,filename) # 图片转字符画
 

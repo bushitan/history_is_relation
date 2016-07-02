@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from xml.etree import ElementTree
 from time import time
-import httplib, urllib
+import httplib, urllib ,urllib2
+import json
 import hashlib
 
 @csrf_exempt
@@ -54,57 +55,80 @@ def AutoReplyService(request):
     if message_type == 'image':
         image_url = root.find('PicUrl').text
 
-        text_xml = '''
+        # text_xml = '''
+        #     <xml>
+        #     <ToUserName><![CDATA[%s]]></ToUserName>
+        #     <FromUserName><![CDATA[%s]]></FromUserName>
+        #     <CreateTime>%s</CreateTime>
+        #     <MsgType><![CDATA[%s]]></MsgType>
+        #     <Content><![CDATA[%s]]></Content>
+        #     </xml>
+        # '''
+
+        text_img_xml = '''
             <xml>
             <ToUserName><![CDATA[%s]]></ToUserName>
             <FromUserName><![CDATA[%s]]></FromUserName>
             <CreateTime>%s</CreateTime>
             <MsgType><![CDATA[%s]]></MsgType>
-            <Content><![CDATA[%s]]></Content>
+
+            <ArticleCount>1</ArticleCount>
+            <Articles>
+            <item>
+            <Title><![CDATA[字符画]]></Title>
+            <Description><![CDATA[description1]]></Description>
+            <PicUrl><![CDATA[%s]]></PicUrl>
+            <Url><![CDATA[%s]]></Url>
+            </item>
+            </Articles>
             </xml>
         '''
 
-        message_type = 'text'
+
+        message_type = 'news'
 
         # url process img to str
-        httpClient = None
-        response = None
-        try:
 
-            params = urllib.urlencode( {  "img_url":"http://mmbiz.qpic.cn/mmbiz/EmT9585IibD0V5dic327aVTjBFr1PgAcdzb7SDPK0Ndo3qqm26wHn6s4Qpf5TddjtpNFRrmL8CBb8Q64XuN13v4Q/0"} )
+        def ImgToStr(url,data):
 
-            headers = {"Content-type": "application/x-www-form-urlencoded" , "Accept": "text/plain"}
+            req = urllib2.Request(url)
+            data = urllib.urlencode(data)
+            #enable cookie
+            opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+            response = opener.open(req, data)
+            res = response.read()
+            # print response.read()
+            obj = json.loads(res)
+            return obj['url']
 
-            httpClient = httplib.HTTPConnection("127.0.0.1", 8000, timeout=30)
 
-            httpClient.request("POST", "/art/wx_img_str", params, headers)
+        url = "http://120.27.97.33/art/wx_img_str"
+        data  = {  "img_url":image_url}
+        _url = "http://120.27.97.33" + ImgToStr(url,data)
 
-            response = httpClient.getresponse()
-            print response.status
-            print response.reason
-            print response.read()
-            print response.getheaders() #获取头信息
-        except Exception, e:
-            print e
-        finally:
-            if httpClient:
-                httpClient.close()
-
-        if response:
-            response.read()["url"]
-
+        content = "<a href='"+_url+"'>image url</a>"
         #answer content
-        content = "<a href='"+image_url+"'>image url</a>"
+
         create_time = int(time())
-        c = {
+        # c = {
+        #     'to_user_name':context['to_user_name'],
+        #     'from_user_name':context['from_user_name'],
+        #     'create_time':create_time,
+        #     'message_type':message_type,
+        #     'content':content
+        # }
+        text_img = {
             'to_user_name':context['to_user_name'],
             'from_user_name':context['from_user_name'],
             'create_time':create_time,
             'message_type':message_type,
-            'content':content
+            'pic_url':_url,
+            'url':_url
         }
 
-        text_reply_xml = text_xml % (c['to_user_name'],c['from_user_name'],c['create_time'],c['message_type'],c['content'])
+        # text_reply_xml = text_xml % (c['to_user_name'],c['from_user_name'],c['create_time'],c['message_type'],c['content'])
+        text_reply_xml = text_img_xml % (text_img['to_user_name'],text_img['from_user_name'],text_img['create_time'],text_img['message_type'],text_img['pic_url'],text_img['url'])
+
 
         response = HttpResponse(text_reply_xml,content_type='application/xml; charset=utf-8')
 
