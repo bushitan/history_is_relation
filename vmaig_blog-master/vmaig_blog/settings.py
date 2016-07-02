@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'vmaig_auth',
     'vmaig_comments',
     'art',
+    'weixin',
 )
 
 MIDDLEWARE_CLASSES = (
