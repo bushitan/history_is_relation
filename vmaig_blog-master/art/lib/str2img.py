@@ -207,7 +207,7 @@ class Str2Img():
         # im.save(url,"png")
 
 
-    def Process_Adapt(self,width = 1080,height = 1970,_grid_numX = 4):
+    def Process_Adapt(self,width = 1080,height = 1920,_grid_numX = 4):
 
         _grid_offsetX = width % _grid_numX / 2
         _grid_length = (width - _grid_offsetX * 2) / _grid_numX
@@ -233,16 +233,14 @@ class Str2Img():
 
         return _lines
 
-    def Process_ByUrl(self,filedir , filename,_grid_numX = 4):
+    def Grid_ByUrl(self,filedir , filename,_grid_numX = 4):
 
         im = Image.open(filedir+filename)
         # print "format:",im.format, "size:",im.size, "mode:",im.mode
-
         WIDTH = im.size[0]
         HEIGHT = im.size[1]
         _grid = _grid_numX
         _charSize = 1
-
         # out = im.resize((WIDTH,HEIGHT), Image.NEAREST)
         a = ImageDraw.Draw(im)
 
@@ -257,12 +255,62 @@ class Str2Img():
                 # a.line(
                 a.line([(_lines[i][0],_lines[i][1]),(_lines[i][2],_lines[i][3])],fill=_color,width=1)
 
-        _strFilename = "str_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        _strFilename = "grid_{}.png".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
         path = filedir + _strFilename
         im.save(path)
         return _strFilename
 
         # _url =   r"/static/img/art/"+filename
+
+    def Str_ByUrl(self,filedir , filename,_grid_numX = 4):
+
+        im = Image.open(filedir+filename)
+        # print "format:",im.format, "size:",im.size, "mode:",im.mode
+        WIDTH = im.size[0]
+        HEIGHT = im.size[1]
+        _grid = _grid_numX
+        _charSize = 12 #单个字符大小
+        _charAscii = "X/-.  "
+        self.ascii_char = list(_charAscii) #字符串转灰度阶梯
+
+        #字符画，宽度固定128个字符，高度自适应
+        str_WIDTH = 128
+        str_HEIGHT = ( HEIGHT / WIDTH ) * str_WIDTH
+        im = im.resize((str_WIDTH,str_HEIGHT), Image.NEAREST)
+
+        #字符个数*字符大小，新建画布
+        strImg = Image.new("RGBA",(str_WIDTH*_charSize,str_HEIGHT*_charSize),(255,255,255))
+        a=ImageDraw.Draw(strImg)
+        #画字符
+        for i in range(HEIGHT):
+            for j in range(WIDTH):
+                _char = self.get_char(*im.getpixel((j,i)))
+                a.text((j*_charSize,i*_charSize),_char,fill=(0,0,0))
+
+        #画方格
+        _color = (130, 130, 130)
+        if _grid > 0:
+            # 在新的画布上画方格
+            _lines = self.Process_Adapt(str_WIDTH*_charSize,str_HEIGHT*_charSize,_grid)
+
+            for i in range(len(_lines)):
+                # a.line(
+                a.line([(_lines[i][0],_lines[i][1]),(_lines[i][2],_lines[i][3])],fill=_color,width=1)
+
+        _strFilename = "str_{}.png".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        path = filedir + _strFilename
+        im.save(path)
+        return _strFilename
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     _s = Str2Img()

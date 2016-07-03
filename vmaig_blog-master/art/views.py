@@ -264,7 +264,9 @@ class WXImgToStr(BaseMixin, ListView):
 
         if _web.Download_Img(filedir,filename,_img_url ): #保存图片
             _str2img = Str2Img()
-            _url += _str2img.Process_ByUrl(filedir,filename) # 图片转字符画
+            # _url += _str2img.Grid_ByUrl(filedir,filename) # 图片转字符画
+            _url += _str2img.Str_ByUrl(filedir,filename) # 图片转字符画
+
 
         mydict = {'url':_url}
         return HttpResponse(
