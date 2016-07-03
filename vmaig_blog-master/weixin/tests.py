@@ -47,7 +47,7 @@ if __name__ == '__main__':
         res = response.read()
         # print response.read()
         obj = json.loads(res)
-        print obj['url']
+        # print obj['url']
     except Exception, e:
         print e
     finally:

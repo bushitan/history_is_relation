@@ -265,27 +265,31 @@ class Str2Img():
     def Str_ByUrl(self,filedir , filename,_grid_numX = 4):
 
         im = Image.open(filedir+filename)
+        print filedir+filename
         # print "format:",im.format, "size:",im.size, "mode:",im.mode
         WIDTH = im.size[0]
         HEIGHT = im.size[1]
         _grid = _grid_numX
-        _charSize = 12 #单个字符大小
-        _charAscii = "X/-.  "
+        _charSize = 10 #单个字符大小
+        _charAscii = u"X/-.  "
         self.ascii_char = list(_charAscii) #字符串转灰度阶梯
 
         #字符画，宽度固定128个字符，高度自适应
         str_WIDTH = 128
-        str_HEIGHT = ( HEIGHT / WIDTH ) * str_WIDTH
+        str_HEIGHT = int(( float(HEIGHT) / float(WIDTH) ) * float(str_WIDTH))
         im = im.resize((str_WIDTH,str_HEIGHT), Image.NEAREST)
 
         #字符个数*字符大小，新建画布
         strImg = Image.new("RGBA",(str_WIDTH*_charSize,str_HEIGHT*_charSize),(255,255,255))
         a=ImageDraw.Draw(strImg)
         #画字符
-        for i in range(HEIGHT):
-            for j in range(WIDTH):
+        for i in range(str_HEIGHT):
+            for j in range(str_WIDTH):
                 _char = self.get_char(*im.getpixel((j,i)))
                 a.text((j*_charSize,i*_charSize),_char,fill=(0,0,0))
+
+
+
 
         #画方格
         _color = (130, 130, 130)
@@ -299,7 +303,8 @@ class Str2Img():
 
         _strFilename = "str_{}.png".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
         path = filedir + _strFilename
-        im.save(path)
+        strImg.save(path)
+        print path
         return _strFilename
 
 
@@ -314,6 +319,10 @@ class Str2Img():
 
 if __name__ == '__main__':
     _s = Str2Img()
+
+    path = r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\blog\static\img\art"
+    filename = r"\tx_100x100_None.jpg"
+    _s.Str_ByUrl(path,filename)
     # _s.Process_Adapt()
     # _s.process("tx_100x100_None.jpg")
     # print _s.ImgToMatrix(r"H:\Code\Python\Git\history_is_relation\vmaig_blog-master\art\static\img\tx_100x100_1.jpg")

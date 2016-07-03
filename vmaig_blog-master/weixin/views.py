@@ -75,7 +75,7 @@ def AutoReplyService(request):
             <ArticleCount>1</ArticleCount>
             <Articles>
             <item>
-            <Title><![CDATA[字符画]]></Title>
+            <Title><![CDATA[str image]]></Title>
             <Description><![CDATA[description1]]></Description>
             <PicUrl><![CDATA[%s]]></PicUrl>
             <Url><![CDATA[%s]]></Url>
