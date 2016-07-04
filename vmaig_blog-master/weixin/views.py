@@ -99,12 +99,14 @@ def AutoReplyService(request):
             res = response.read()
             # print response.read()
             obj = json.loads(res)
-            return obj['url']
+            return obj['filename']
 
 
         url = "http://120.27.97.33/art/wx_img_str"
         data  = {  "img_url":image_url}
-        _url = "http://120.27.97.33" + ImgToStr(url,data)
+
+        # _url = "http://120.27.97.33" + ImgToStr(url,data)
+        _pythonanywhere_url = "http://bushitan.pythonanywhere.com/art/show/" + ImgToStr(url,data)
 
         content = "<a href='"+_url+"'>image url</a>"
         #answer content

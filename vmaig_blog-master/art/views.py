@@ -240,13 +240,23 @@ class CreationImgView(BaseMixin, ListView):
 
 
 
+class ShowView(BaseMixin, ListView):
+    template_name = 'img_str/show.html'
+
+    def get_context_data(self, **kwargs):
+
+        kwargs['url'] = self.kwargs.get('url', '')
+
+        return super(ShowView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
 
 #微信接口使用，图片转字符画
-
 class WXImgToStr(BaseMixin, ListView):
     # template_name = 'img_str/pc.html'
 
     def get_context_data(self, **kwargs):
+        self.filename = self.kwargs.get('url', '')
         return super(WXImgToStr, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass
@@ -256,19 +266,24 @@ class WXImgToStr(BaseMixin, ListView):
         _img_url = self.request.POST.get("img_url", "")
 
         filedir = sys.path[0]+"/blog/static/img/art/"
-        filename = "img_{}.jpg".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        filename = "img_{}".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        filestyle = ".png"
         # img_url = "http://mmbiz.qpic.cn/mmbiz/EmT9585IibD0V5dic327aVTjBFr1PgAcdzb7SDPK0Ndo3qqm26wHn6s4Qpf5TddjtpNFRrmL8CBb8Q64XuN13v4Q/0"
 
         _web =  Web()
         _url = r"/static/img/art/"
 
-        if _web.Download_Img(filedir,filename,_img_url ): #保存图片
+        _strfilename = ''
+        if _web.Download_Img(filedir,filename+filestyle,_img_url ): #保存图片
             _str2img = Str2Img()
             # _url += _str2img.Grid_ByUrl(filedir,filename) # 图片转字符画
-            _url += _str2img.Str_ByUrl(filedir,filename) # 图片转字符画
+            _strfilename = _str2img.Str_ByUrl(filedir,filename+filestyle) # 图片转字符画
 
 
-        mydict = {'url':_url}
+        mydict = {
+            'url':_url,
+            'filename':_strfilename
+        }
         return HttpResponse(
             json.dumps(mydict),
             content_type="application/json"

@@ -301,8 +301,9 @@ class Str2Img():
                 # a.line(
                 a.line([(_lines[i][0],_lines[i][1]),(_lines[i][2],_lines[i][3])],fill=_color,width=1)
 
-        _strFilename = "str_{}.png".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
-        path = filedir + _strFilename
+        _strFilename = "str_{}".format( time.strftime("%Y%m%d%H%M%S",time.localtime(time.time())))
+        filestyle = ".png"
+        path = filedir + _strFilename + filestyle
         strImg.save(path)
         print path
         return _strFilename

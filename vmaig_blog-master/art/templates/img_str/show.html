@@ -1,0 +1,11 @@
+{% extends "./blog/base.html" %}
+
+{%block main%}
+<div>
+    <a>
+        {% if url %}
+        <img src="http://120.27.97.33/static/img/art/{{url}}.png" style="width:100%;height: auto" />
+        {% endif %}
+    </a>
+</div>
+{% endblock %}
