@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'', include('vmaig_comments.urls')),
     url(r'', include('vmaig_auth.urls')),
     url(r'', include('art.urls')),
-    url(r'weixin', include('weixin.urls')),
+    url(r'^weixin/', include('weixin.urls')),
     # url(r'', include('time_line.urls')),
 ]

@@ -16,5 +16,5 @@ urlpatterns = [
    url(r'^art/wx_img_str$', WXImgToStr.as_view()),
 
 
-   url(r'^art/show/(?P<url>\w+)$', ShowView.as_view()),
+   url(r'^art/show/$', ShowView.as_view()),
 ]

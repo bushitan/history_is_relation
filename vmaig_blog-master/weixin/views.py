@@ -99,16 +99,16 @@ def AutoReplyService(request):
             res = response.read()
             # print response.read()
             obj = json.loads(res)
-            return obj['filename']
+            return obj
 
 
         url = "http://120.27.97.33/art/wx_img_str"
         data  = {  "img_url":image_url}
 
-        # _url = "http://120.27.97.33" + ImgToStr(url,data)
-        _pythonanywhere_url = "http://bushitan.pythonanywhere.com/art/show/" + ImgToStr(url,data)
+        _img_url = "http://120.27.97.33" + ImgToStr(url,data)['url'] + ImgToStr(url,data)['filename'] + ".png"
+        _paw_url = "http://bushitan.pythonanywhere.com/art/show/" + ImgToStr(url,data)['filename']
 
-        content = "<a href='"+_url+"'>image url</a>"
+        content = "<a href='"+_paw_url+"'>image url</a>"
         #answer content
 
         create_time = int(time())
@@ -124,8 +124,8 @@ def AutoReplyService(request):
             'from_user_name':context['from_user_name'],
             'create_time':create_time,
             'message_type':message_type,
-            'pic_url':_url,
-            'url':_url
+            'pic_url':_img_url,
+            'url':_paw_url
         }
 
         # text_reply_xml = text_xml % (c['to_user_name'],c['from_user_name'],c['create_time'],c['message_type'],c['content'])

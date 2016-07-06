@@ -242,14 +242,21 @@ class CreationImgView(BaseMixin, ListView):
 
 class ShowView(BaseMixin, ListView):
     template_name = 'img_str/show.html'
-
+    url = ''
     def get_context_data(self, **kwargs):
-
-        kwargs['url'] = self.kwargs.get('url', '')
-
+        kwargs['url'] = self.url
+        # print kwargs['url']
         return super(ShowView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass
+    def get(self, request, *args, **kwargs):
+
+        self.url = request.GET.get('url')
+
+        #图片转像素，返回像素矩阵
+        # self.filename = self.kwargs.get('filename', '')
+
+        return super(ShowView, self).get(request, *args, **kwargs)
 
 #微信接口使用，图片转字符画
 class WXImgToStr(BaseMixin, ListView):
