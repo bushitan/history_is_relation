@@ -245,7 +245,7 @@ class ShowView(BaseMixin, ListView):
     url = ''
     def get_context_data(self, **kwargs):
         kwargs['url'] = self.url
-        # print kwargs['url']
+        print kwargs['url']
         return super(ShowView, self).get_context_data(**kwargs)
     def get_queryset(self):
         pass
