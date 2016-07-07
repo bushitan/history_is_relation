@@ -80,8 +80,9 @@ class Str2Img():
         # print "homedir:",homedir
         # print "sys.path[0]:",sys.path[0]
         # parent_path = os.path.dirname(homedir)
-        filedir = sys.path[0]+"/blog/static/img/art/"
+        # filedir = sys.path[0]+"/blog/static/img/art/"
 
+        filedir = sys.path[0]+"/static/img/art/"  #pythonanywhere环境使用
         # print "homedir:" + homedir
         # print "filedir:" + filedir
         if not os.path.exists(filedir):
