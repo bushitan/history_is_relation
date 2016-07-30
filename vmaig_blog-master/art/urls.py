@@ -2,6 +2,7 @@
 
 from django.conf.urls import url
 from art.views import *
+from django.views.generic import RedirectView
 urlpatterns = [
 
    url(r'^art/main$', MainView.as_view()),
@@ -17,4 +18,6 @@ urlpatterns = [
 
 
    url(r'^art/show/$', ShowView.as_view()),
+   url(r'^art/gallery/(?P<openid>\w+)$',GalleryView.as_view()),
+   # RedirectView.as_view(url='http://120.27.97.33:82/blog/gallery/11'+)
 ]

@@ -17,6 +17,7 @@ import os
 import base64
 from PIL import Image,ImageDraw,ImageFont
 import sys
+from django.http import HttpResponseRedirect
 # logger
 logger = logging.getLogger(__name__)
 
@@ -239,6 +240,21 @@ class CreationImgView(BaseMixin, ListView):
         pass
 
 
+
+
+class GalleryView(BaseMixin, ListView):
+    template_name = 'img_str/show.html'
+    url = ''
+    def get_context_data(self, **kwargs):
+        # kwargs['url'] = self.url
+        # print kwargs['url']
+        return super(GalleryView, self).get_context_data(**kwargs)
+    def get_queryset(self):
+        pass
+    def get(self, request, *args, **kwargs):
+        print 'ok'
+        _openid = self.kwargs.get('openid', '')
+        return HttpResponseRedirect('http://120.27.97.33:82/blog/gallery/'+_openid)  #跳转到index界面
 
 class ShowView(BaseMixin, ListView):
     template_name = 'img_str/show.html'
